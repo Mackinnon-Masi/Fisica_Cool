@@ -1,5 +1,5 @@
 # Fisica_Cool
-Proyecto final 4° Informátixca realizado por Lautaro Mackinnon y Malena Masi.
+Proyecto final 4° Informática realizado por Lautaro Mackinnon y Malena Masi.
 # ¿De qué trata este proyecto?
 Elegimos usar como tema de física el tema de MRUV, tiro oblicuo y tiro vertical, abusándonos fuertemente del hecho de que todas estas usan las mismas fórmulas. 
 Este proyecto será un simulador de un tiro, en el cual un cañón tirará una bala y mostrará su recorrido. Tendrá ingresadas las fórmulas para que calcule su descomposición de fuerzas en base al punto elegido por el usuario.
