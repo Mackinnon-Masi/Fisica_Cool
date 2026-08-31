@@ -31,7 +31,7 @@ class HolaJavaFX : Application() {
         //También de paso le metemos el circulo, después del Pane, que descubrimos que es para que se quede en la posición que le asignamos mas arriba.
 
         //stage.isFullScreen = true
-        
+    
         stage.title = "Proyecto Física MRUV re fachero facherito"
         //Esto de arriba es para cambiar el coso que le da el nombre a la ventana.
         stage.scene = scene

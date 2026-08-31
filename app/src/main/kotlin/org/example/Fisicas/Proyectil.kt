@@ -1,5 +1,7 @@
 package org.example.Fisicas
 
+import javafx.animation.PauseTransition
+import javafx.util.Duration
 /**
  * Representa un proyectil en movimiento parabólico (MRU en X, MRUV en Y).
  *
@@ -14,7 +16,7 @@ package org.example.Fisicas
 class Proyectil(
     var posicionX: Double = 0.0,
     var posicionY: Double = 0.0,
-    var velocidadX: Double = 4.0,
+    var velocidadX: Double = 0.0,
     var velocidadY: Double = 0.0,
     var activo: Boolean = true
 ) {
@@ -48,6 +50,12 @@ class Proyectil(
         activo = false
     }
 
+    fun runAfter(delayMillis: Long, action: () -> Unit) {
+        val pt = PauseTransition(Duration.millis(delayMillis.toDouble()))
+        pt.setOnFinished { action() }
+        pt.play()
+    }
+
     override fun toString(): String {
         val estado = if (activo) "ACTIVO" else "INACTIVO"
         return "Proyectil(x=%.2f, y=%.2f, vx=%.2f, vy=%.2f, %s)".format(
@@ -55,3 +63,5 @@ class Proyectil(
         )
     }
 }
+
+//six seven
