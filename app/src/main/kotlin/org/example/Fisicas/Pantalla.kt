@@ -20,7 +20,7 @@ class Pantalla : Application() {
         val proyectil = Proyectil(
             posicionX = 100.0,
             posicionY = 620.0,
-            velocidadX = 100.0,
+            velocidadX = 1000.0,
             velocidadY = -1200.0
         )
 
