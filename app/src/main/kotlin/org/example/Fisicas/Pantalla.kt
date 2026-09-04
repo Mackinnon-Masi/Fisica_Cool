@@ -20,8 +20,8 @@ class Pantalla : Application() {
         val proyectil = Proyectil(
             posicionX = 100.0,
             posicionY = 620.0,
-            velocidadX = 1000.0,
-            velocidadY = -1200.0
+            velocidadX = 200.0,
+            velocidadY = -600.0
         )
 
         val circulo1 = Circle(proyectil.posicionX, proyectil.posicionY, 5.0).apply {
@@ -45,7 +45,7 @@ class Pantalla : Application() {
                 lastTime = now
 
                 // Usamos una gravedad negativa para compensar la convención en Proyectil
-                proyectil.actualizar(dt, gravedad = -981.0)
+                proyectil.actualizar(dt, gravedad = -200.0)
 
                 circulo1.centerX = proyectil.posicionX
                 circulo1.centerY = proyectil.posicionY
