@@ -1,16 +1,16 @@
 package org.example.Fisicas
 
-import javafx.animation.AnimationTimer
 import javafx.application.Application
 import javafx.scene.Scene
+import javafx.scene.Group
 import javafx.scene.control.Label
+import javafx.animation.AnimationTimer
+import javafx.scene.layout.StackPane
 import javafx.scene.layout.Pane
 import javafx.stage.Stage
 import javafx.scene.shape.Circle
 import javafx.scene.paint.Color
 import org.example.Fisicas.Proyectil
-
-
 
 class Pantalla : Application() {
     override fun start(stage: Stage) {
