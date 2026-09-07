@@ -38,6 +38,15 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    // JavaFX modules required by the GUI
+    implementation("org.openjfx:javafx-controls:21.0.2")
+    implementation("org.openjfx:javafx-graphics:21.0.2")
+}
+
+javafx {
+    version = "21.0.2"
+    modules = listOf("javafx.controls", "javafx.graphics")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
