@@ -1,4 +1,4 @@
-package org.example.Fisicas
+package org.example.fisicas
 
 import javafx.animation.PauseTransition
 import javafx.util.Duration
