@@ -2,13 +2,13 @@ package org.example.visuales
 
 import javafx.geometry.Insets
 import javafx.geometry.Pos
-import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
+import org.example.Trackeo.MouseTracker
 
 class Creditos {
 
@@ -20,8 +20,8 @@ class Creditos {
         if (montserratRegular != null) Font.loadFont(montserratRegular, 28.0)
     }
 
-    fun crearEscena(onVolverClick: () -> Unit = {}): Scene {
-        
+    fun crearVista(onVolverClick: () -> Unit = {}): BorderPane {
+
         // --- BOTÓN FLECHA DE REGRESO ---
         val btnVolver = Button("🡰").apply {
             style = """
@@ -77,7 +77,8 @@ class Creditos {
             style = "-fx-background-color: black;"
             padding = Insets(20.0, 0.0, 0.0, 30.0) // Margen para la flecha (Arriba, Derecha, Abajo, Izquierda)
         }
-
-        return Scene(root, 1280.0, 720.0)
+        
+        MouseTracker.attachTo(root, showLabel = false)
+        return root
     }
 }
