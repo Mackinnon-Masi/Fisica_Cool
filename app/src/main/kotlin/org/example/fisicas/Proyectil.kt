@@ -27,8 +27,7 @@ class Proyectil(
      * Ecuaciones del movimiento:
      * - MRU en X: x_nueva = x + v_x * dt
      * - MRUV en Y: y_nueva = y + v_y * dt
-     * - MRUV en Y: v_y_nueva = v_y - g * dt  (gravedad positiva hacia abajo)
-     *
+     * - MRUV en Y: v_y_nueva = v_y - g * dt (gravedad positiva hacia abajo)
      * @param dt Intervalo de tiempo (delta time) en segundos.
      * @param gravedad Aceleración gravitacional (m/s²), positiva hacia abajo.
      */
