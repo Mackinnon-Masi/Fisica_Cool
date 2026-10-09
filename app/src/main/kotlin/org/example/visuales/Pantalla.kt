@@ -10,9 +10,10 @@ import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 import javafx.stage.Stage
+import org.example.Trackeo.MouseTracker
 import org.example.fisicas.Proyectil
 
-class Pantalla2 : Application() {
+class Pantalla : Application() {
     override fun start(stage: Stage) {
 
         var flag = false
@@ -32,7 +33,15 @@ class Pantalla2 : Application() {
         }
 
         // --- BOTÓN FLECHA DE REGRESO (Misma estética y lógica de Creditos.kt) ---
-        lateinit var escenaInicio: Scene
+        lateinit var rootInicio: Pane
+        lateinit var rootCreditos: Pane
+        lateinit var scene: Scene
+
+        fun mostrarVista(root: Pane) {
+            scene.root = root
+            root.applyCss()
+            root.layout()
+        }
 
         val btnVolver = Button("🡰").apply {
             style = """
@@ -66,7 +75,8 @@ class Pantalla2 : Application() {
                 bala.centerY = proyectil.posicionY
 
                 // Cambiar a la escena de Inicio
-                stage.scene = escenaInicio
+                flag = false
+                mostrarVista(rootInicio)
             }
         }
 
@@ -80,30 +90,26 @@ class Pantalla2 : Application() {
             style = "-fx-background-color: black;"
             padding = Insets(20.0, 0.0, 0.0, 30.0)
         }
+        MouseTracker.attachTo(rootSimulacion)
 
-        val scene = Scene(rootSimulacion, 1280.0, 720.0, Color.BLACK)
+        scene = Scene(rootSimulacion, 1280.0, 720.0, Color.BLACK)
 
         // Carga de la pantalla de inicio
         val pantallaInicio = Inicio()
-        
-        // Creación de escena Créditos
         val pantallaCreditos = Creditos()
-        lateinit var escenaCreditos: Scene
-        escenaCreditos = pantallaCreditos.crearEscena(
+        rootCreditos = pantallaCreditos.crearVista(
             onVolverClick = {
-                stage.scene = escenaInicio
+                mostrarVista(rootInicio)
             }
         )
 
-        escenaInicio = pantallaInicio.crearEscena(
+        rootInicio = pantallaInicio.crearVista(
             onIniciarClick = {
-                // Al hacer clic en INICIAR, cambia a la escena de simulación
-                stage.scene = scene
-                stage.sizeToScene()
+                mostrarVista(rootSimulacion)
                 flag = true
             },
             onCreditosClick = {
-                stage.scene = escenaCreditos
+                mostrarVista(rootCreditos)
             }
         )
 
@@ -137,7 +143,8 @@ class Pantalla2 : Application() {
         timer.start()
 
         stage.title = "Proyecto Física MRUV re fachero facherito"
-        stage.scene = escenaInicio // Arranca en la pantalla de inicio
+        mostrarVista(rootInicio)
+        stage.scene = scene
         stage.show()
     }
 }

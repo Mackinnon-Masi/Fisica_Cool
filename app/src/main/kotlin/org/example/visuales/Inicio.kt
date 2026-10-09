@@ -1,12 +1,12 @@
 package org.example.visuales
 
 import javafx.geometry.Pos
-import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
+import org.example.Trackeo.MouseTracker
 
 class Inicio {
 
@@ -29,10 +29,10 @@ class Inicio {
         }
     }
 
-    fun crearEscena(
+    fun crearVista(
         onIniciarClick: () -> Unit = {},
         onCreditosClick: () -> Unit = {}
-    ): Scene {
+    ): VBox {
         // --- TÍTULO ---
         val titulo = Label("SIMULADOR MRUV").apply {
             textFill = Color.WHITE
@@ -65,8 +65,13 @@ class Inicio {
 
         // --- BOTONES Y REGISTRO IGUAL QUE ANTES ---
         val btnIniciar = Button("INICIAR").apply {
+            minWidth = 350.0
             prefWidth = 350.0
+            maxWidth = 350.0
+            minHeight = 55.0
             prefHeight = 55.0
+            maxHeight = 55.0
+            isPickOnBounds = true
             style = estiloNormal
             setOnMouseEntered { style = estiloHover }
             setOnMouseExited { style = estiloNormal }
@@ -74,8 +79,13 @@ class Inicio {
         }
 
         val btnCreditos = Button("CRÉDITOS").apply {
+            minWidth = 350.0
             prefWidth = 350.0
+            maxWidth = 350.0
+            minHeight = 55.0
             prefHeight = 55.0
+            maxHeight = 55.0
+            isPickOnBounds = true
             style = estiloNormal
             setOnMouseEntered { style = estiloHover }
             setOnMouseExited { style = estiloNormal }
@@ -91,6 +101,7 @@ class Inicio {
             style = "-fx-background-color: black;"
         }
 
-        return Scene(root, 1280.0, 720.0)
+        MouseTracker.attachTo(root, showLabel = false)
+        return root
     }
 }
