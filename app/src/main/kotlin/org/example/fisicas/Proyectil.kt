@@ -29,7 +29,8 @@ class Proyectil(
      * - MRUV en Y: y_nueva = y + v_y * dt
      * - MRUV en Y: v_y_nueva = v_y - g * dt (gravedad positiva hacia abajo)
      * @param dt Intervalo de tiempo (delta time) en segundos.
-     * @param gravedad Aceleración gravitacional (m/s²), positiva hacia abajo.
+    * @param gravedad Aceleración firmada en unidades de posición/s². En esta
+    * convención, un valor negativo produce aceleración hacia +Y.
      */
     fun actualizar(dt: Double, gravedad: Double): Unit {
         if (!activo) return
@@ -37,8 +38,8 @@ class Proyectil(
         // MRU en eje X (velocidad constante, sin resistencia del aire)
         posicionX += velocidadX * dt
 
-        // MRUV en eje Y (aceleración constante = -gravedad)
-        posicionY += velocidadY * dt
+        // MRUV en eje Y: mismo desplazamiento analítico que la trayectoria prevista.
+        posicionY += velocidadY * dt - 0.5 * gravedad * dt * dt
         velocidadY -= gravedad * dt
     }
 

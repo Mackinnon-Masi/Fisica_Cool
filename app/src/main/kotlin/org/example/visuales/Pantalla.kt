@@ -5,7 +5,6 @@ import javafx.application.Application
 import javafx.geometry.Insets
 import javafx.scene.Scene
 import javafx.scene.control.Button
-import javafx.scene.control.CheckBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import javafx.scene.control.TextFormatter
@@ -22,6 +21,11 @@ import org.example.Trackeo.KeyboardReader
 import org.example.Trackeo.MouseTracker
 import org.example.fisicas.CalculadoraTrayectoria
 import org.example.fisicas.Proyectil
+import org.example.fisicas.VelocidadInicial
+import org.example.visuales.trayectoria.VisualizadorTrayectoria
+
+private const val PIXELES_POR_METRO = 100.0
+private const val GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO = 9.81
 
 class Pantalla : Application() {
     override fun start(stage: Stage) {
@@ -33,6 +37,11 @@ class Pantalla : Application() {
         var objetivoX = 0.0
         var objetivoY = 0.0
         var espacioYaProcesado = false
+        var eYaProcesada = false
+        var qYaProcesada = false
+        var modoEdicion = false
+        var trayectoriaAltaSeleccionada = false
+        var recorridoTerminado = false
         var posicionDisparoY = 620.0
 
         // Instanciamos un proyectil (posiciones en píxeles, velocidades en px/s)
@@ -49,6 +58,9 @@ class Pantalla : Application() {
             stroke = Color.WHITE
             strokeWidth = 3.0
         }
+        val paneSimulacion = Pane(bala)
+        val visualizadorTrayectoria = VisualizadorTrayectoria(paneSimulacion)
+        bala.toFront()
 
         // --- BOTÓN FLECHA DE REGRESO (Misma estética y lógica de Creditos.kt) ---
         lateinit var rootInicio: Pane
@@ -92,6 +104,7 @@ class Pantalla : Application() {
 
                 bala.centerX = proyectil.posicionX
                 bala.centerY = proyectil.posicionY
+                visualizadorTrayectoria.ocultar()
 
                 // Cambiar a la escena de Inicio
                 flag = false
@@ -103,9 +116,13 @@ class Pantalla : Application() {
         val indicacionDisparo = Label("Presiona ESPACIO para lanzar").apply {
             textFill = Color.WHITE
         }
-        val campoRapidez = TextField("700").apply {
-            promptText = "Rapidez (px/s)"
+        val indicacionEdicion = Label("Presiona E para editar los datos").apply {
+            textFill = Color.LIGHTGRAY
+        }
+        val campoRapidez = TextField("7.0").apply {
+            promptText = "Rapidez (m/s)"
             prefColumnCount = 8
+            isDisable = true
             textFormatter = TextFormatter<String> { change ->
                 if (change.controlNewText.matches(Regex("[0-9]*(\\.[0-9]*)?"))) {
                     change
@@ -114,11 +131,38 @@ class Pantalla : Application() {
                 }
             }
         }
-        val etiquetaRapidez = Label("Rapidez inicial (px/s):").apply {
+        val etiquetaRapidez = Label("Rapidez inicial (m/s):").apply {
             textFill = Color.WHITE
         }
-        val seleccionarTrayectoriaAlta = CheckBox("Trayectoria alta").apply {
+        val estadoTrayectoria = Label("Trayectoria baja").apply {
             textFill = Color.WHITE
+        }
+        val indicacionTrayectoria = Label("En modo edición, presiona Q para alternar alta/baja").apply {
+            textFill = Color.LIGHTGRAY
+        }
+        fun calcularVelocidad(objetivoXpx: Double, objetivoYpx: Double): VelocidadInicial? {
+            val rapidez = campoRapidez.text.toDoubleOrNull() ?: return null
+            return calculadoraTrayectoria.calcular(
+                origenX = 100.0 / PIXELES_POR_METRO,
+                origenY = posicionDisparoY / PIXELES_POR_METRO,
+                objetivoX = objetivoXpx / PIXELES_POR_METRO,
+                objetivoY = objetivoYpx / PIXELES_POR_METRO,
+                rapidez = rapidez,
+                gravedad = GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO,
+                trayectoriaAlta = trayectoriaAltaSeleccionada
+            )
+        }
+        fun mostrarTrayectoria(velocidad: VelocidadInicial, objetivoXpx: Double, objetivoYpx: Double) {
+            visualizadorTrayectoria.mostrarPrediccion(
+                origenX = 100.0,
+                origenY = posicionDisparoY,
+                velocidadX = velocidad.velocidadX * PIXELES_POR_METRO,
+                velocidadY = velocidad.velocidadY * PIXELES_POR_METRO,
+                gravedad = GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO * PIXELES_POR_METRO,
+                tiempoDeVuelo = velocidad.tiempoDeVuelo,
+                objetivoX = objetivoXpx,
+                objetivoY = objetivoYpx
+            )
         }
         val estadoDisparo = Label().apply {
             textFill = Color.LIGHTCORAL
@@ -127,12 +171,12 @@ class Pantalla : Application() {
             8.0,
             btnVolver,
             HBox(8.0, etiquetaRapidez, campoRapidez),
-            seleccionarTrayectoriaAlta,
+            estadoTrayectoria,
+            indicacionTrayectoria,
             indicacionDisparo,
+            indicacionEdicion,
             estadoDisparo
         )
-        val paneSimulacion = Pane(bala)
-
         // Usamos BorderPane para superponer el botón "Volver" en la esquina superior izquierda
         val rootSimulacion = BorderPane().apply {
             top = controlesSimulacion
@@ -140,7 +184,7 @@ class Pantalla : Application() {
             style = "-fx-background-color: black;"
             padding = Insets(20.0, 0.0, 0.0, 30.0)
         }
-        MouseTracker.attachTo(rootSimulacion)
+        val etiquetaCoordenadas = MouseTracker.attachTo(rootSimulacion)
 
         scene = Scene(rootSimulacion, 1280.0, 720.0, Color.BLACK)
         val keyboardReader = KeyboardReader().apply {
@@ -173,8 +217,14 @@ class Pantalla : Application() {
                 posicionDisparoY = (paneSimulacion.height - 20.0).coerceAtLeast(20.0)
                 proyectil.posicionX = 100.0
                 proyectil.posicionY = posicionDisparoY
+                recorridoTerminado = false
+                modoEdicion = false
+                campoRapidez.isDisable = true
+                indicacionEdicion.text = "Presiona E para editar los datos"
+                etiquetaCoordenadas?.isVisible = true
                 bala.centerX = proyectil.posicionX
                 bala.centerY = proyectil.posicionY
+                visualizadorTrayectoria.ocultar()
                 esperandoDisparo = true
             },
             onCreditosClick = {
@@ -190,24 +240,83 @@ class Pantalla : Application() {
                     espacioYaProcesado = false
                 }
 
-                if (esperandoDisparo && espacioPresionado && !espacioYaProcesado) {
-                    espacioYaProcesado = true
-                    val rapidez = campoRapidez.text.toDoubleOrNull()
+                val ePresionada = keyboardReader.isKeyPressed(KeyCode.E)
+                if (!ePresionada) {
+                    eYaProcesada = false
+                }
+                val qPresionada = keyboardReader.isKeyPressed(KeyCode.Q)
+                if (!qPresionada) {
+                    qYaProcesada = false
+                }
+                if (
+                    scene.root === rootSimulacion && esperandoDisparo && modoEdicion &&
+                    qPresionada && !qYaProcesada
+                ) {
+                    qYaProcesada = true
+                    trayectoriaAltaSeleccionada = !trayectoriaAltaSeleccionada
+                    estadoTrayectoria.text = if (trayectoriaAltaSeleccionada) {
+                        "Trayectoria alta"
+                    } else {
+                        "Trayectoria baja"
+                    }
+                }
+                if (
+                    scene.root === rootSimulacion && (esperandoDisparo || flag) &&
+                    ePresionada && !eYaProcesada
+                ) {
+                    eYaProcesada = true
+                    if (flag) {
+                        flag = false
+                        esperandoDisparo = true
+                        tiempoTranscurrido = 0.0
+                        proyectil.posicionX = 100.0
+                        proyectil.posicionY = posicionDisparoY
+                        proyectil.velocidadX = 0.0
+                        proyectil.velocidadY = 0.0
+                        proyectil.activo = true
+                        bala.centerX = proyectil.posicionX
+                        bala.centerY = proyectil.posicionY
+                        estadoDisparo.text = ""
+                        modoEdicion = true
+                    } else {
+                        modoEdicion = !modoEdicion
+                    }
+                    campoRapidez.isDisable = !modoEdicion
+                    indicacionEdicion.text = if (modoEdicion) {
+                        "Presiona E para volver a apuntar"
+                    } else {
+                        "Presiona E para editar los datos"
+                    }
+                    etiquetaCoordenadas?.isVisible = !modoEdicion
+                    if (modoEdicion) {
+                        recorridoTerminado = false
+                        visualizadorTrayectoria.ocultar()
+                    }
+                }
+
+                if (esperandoDisparo && !modoEdicion && !recorridoTerminado) {
                     val puntoObjetivo = paneSimulacion.sceneToLocal(
                         MouseTracker.lastX,
                         MouseTracker.lastY
                     )
-                    val velocidad = rapidez?.let {
-                        calculadoraTrayectoria.calcular(
-                            origenX = 100.0,
-                            origenY = posicionDisparoY,
-                            objetivoX = puntoObjetivo.x,
-                            objetivoY = puntoObjetivo.y,
-                            rapidez = it,
-                            gravedad = 200.0,
-                            trayectoriaAlta = seleccionarTrayectoriaAlta.isSelected
-                        )
+                    val velocidad = calcularVelocidad(puntoObjetivo.x, puntoObjetivo.y)
+                    if (velocidad == null) {
+                        visualizadorTrayectoria.ocultar()
+                    } else {
+                        mostrarTrayectoria(velocidad, puntoObjetivo.x, puntoObjetivo.y)
                     }
+                }
+
+                if (
+                    esperandoDisparo && !modoEdicion && espacioPresionado &&
+                    !espacioYaProcesado
+                ) {
+                    espacioYaProcesado = true
+                    val puntoObjetivo = paneSimulacion.sceneToLocal(
+                        MouseTracker.lastX,
+                        MouseTracker.lastY
+                    )
+                    val velocidad = calcularVelocidad(puntoObjetivo.x, puntoObjetivo.y)
 
                     if (velocidad == null) {
                         estadoDisparo.text =
@@ -215,15 +324,21 @@ class Pantalla : Application() {
                     } else {
                         proyectil.posicionX = 100.0
                         proyectil.posicionY = posicionDisparoY
-                        proyectil.velocidadX = velocidad.velocidadX
-                        proyectil.velocidadY = velocidad.velocidadY
+                        proyectil.velocidadX = velocidad.velocidadX * PIXELES_POR_METRO
+                        proyectil.velocidadY = velocidad.velocidadY * PIXELES_POR_METRO
                         proyectil.activo = true
+                        mostrarTrayectoria(velocidad, puntoObjetivo.x, puntoObjetivo.y)
+                        visualizadorTrayectoria.mostrarEjes(
+                            origenX = proyectil.posicionX,
+                            origenY = proyectil.posicionY
+                        )
                         bala.centerX = proyectil.posicionX
                         bala.centerY = proyectil.posicionY
                         objetivoX = puntoObjetivo.x
                         objetivoY = puntoObjetivo.y
                         tiempoDeVueloObjetivo = velocidad.tiempoDeVuelo
                         tiempoTranscurrido = 0.0
+                        recorridoTerminado = false
                         estadoDisparo.text = ""
                         esperandoDisparo = false
                         flag = true
@@ -241,7 +356,10 @@ class Pantalla : Application() {
                     tiempoTranscurrido += dt
 
                     // Usamos gravedad negativa para compensar la convención en Proyectil
-                    proyectil.actualizar(dt, gravedad = -200.0)
+                    proyectil.actualizar(
+                        dt,
+                        gravedad = -GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO * PIXELES_POR_METRO
+                    )
 
                     if (tiempoTranscurrido >= tiempoDeVueloObjetivo) {
                         proyectil.posicionX = objetivoX
@@ -249,8 +367,14 @@ class Pantalla : Application() {
                         proyectil.desactivar()
                         flag = false
                         esperandoDisparo = true
+                        recorridoTerminado = true
                     }
 
+                    visualizadorTrayectoria.actualizarProgreso(tiempoTranscurrido)
+                    visualizadorTrayectoria.actualizarEjes(
+                        proyectil.posicionX,
+                        proyectil.posicionY
+                    )
                     bala.centerX = proyectil.posicionX
                     bala.centerY = proyectil.posicionY
 
@@ -258,6 +382,7 @@ class Pantalla : Application() {
                     if (proyectil.posicionY > scene.height || proyectil.posicionX > scene.width) {
                         proyectil.desactivar()
                         flag = false
+                        visualizadorTrayectoria.ocultar()
                     }
                 } else {
                     lastTime = now
