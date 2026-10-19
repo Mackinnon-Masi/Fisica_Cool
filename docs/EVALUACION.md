@@ -3,7 +3,7 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-10-17.
+> Generado: 2026-10-19.
 
 ## 1. Veredicto
 
@@ -15,7 +15,7 @@
 | Clases (bien usadas) | 10 (2 OK) |
 | Código dentro de clases (%POO) | 89% |
 | Funciones fuera de clases | 1 |
-| Duplicación | 9.7% |
+| Duplicación lógica | 2.3% |
 | Señales S/O/L/I/D | 10/0/2/0/6 |
 | Tope duro aplicado | `SUELTAS` → índice ≤ 60 |
 
@@ -28,14 +28,14 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Semáforo | Resultado |
 |---|---|
 | Aprobar (`estandar`) | **no cumple** — 3/4 |
-| Destacar (`exigente`) | **no cumple** — 0/5 |
+| Destacar (`exigente`) | **no cumple** — 1/5 |
 
 **Criterios para aprobar**
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 85% | 89% | sí |
-| Duplicación | ≤ 10% | 7.9% | sí |
+| Duplicación lógica | ≤ 10% | 2.3% | sí |
 | Funciones fuera de clases | ≤ 1 | 1 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
 
@@ -44,7 +44,7 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 95% | 89% | no |
-| Duplicación | ≤ 5% | 9.7% | no |
+| Duplicación lógica | ≤ 5% | 2.3% | sí |
 | Funciones fuera de clases | ≤ 0 | 1 | no |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
 | Índice de calidad POO/SOLID | ≥ 60 | 5/100 | no |
@@ -68,11 +68,11 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
 - **Tu resultado:** índice **5/100**
 
-### 2. Duplicación (DRY) (duplicacion) — con señales
+### 2. Duplicación lógica (DRY) (duplicacion) — con señales
 
-- **Qué mide:** Porcentaje de bloques de código repetidos (similitud) en el repositorio.
-- **Por qué importa:** Cada copia se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
-- **Tu resultado:** **9.7%** de duplicación
+- **Qué mide:** Porcentaje de bloques de LÓGICA repetidos. Quedan fuera imports/includes, anotaciones, declaraciones de campos y comentarios/Javadoc/docstrings: esos bloques son boilerplate, no lógica.
+- **Por qué importa:** Cada copia de lógica se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
+- **Tu resultado:** **2.3%** de duplicación lógica
 - **Para investigar la causa:**
     - ¿El trabajo se repartió por pantallas o archivos y se integró copiando y pegando bloques?
     - ¿Qué zonas del sistema cambiaron juntas más de una vez (señal de lógica compartida)?
@@ -267,7 +267,7 @@ xychart-beta
     title "Índice POO/SOLID a lo largo de los commits"
     x-axis ["f7645c2", "62b1a6d", "b1e91df", "0211b91", "56a8f79", "fa3b047", "191ea3c", "e86fc1a", "580c966", "3cc7274", "78ab355", "b488da6", "61b98c8"]
     y-axis "Índice" 0 --> 100
-    line [0, 0, 0, 18, 15, 15, 8, 9, 7, 6, 6, 6, 5]
+    line [0, 0, 0, 38, 21, 21, 13, 11, 9, 7, 7, 6, 5]
 ```
 
 | # | Fecha | Commit | Autor | LOC | Índice | %POO | Duplic. | Sueltas |
@@ -275,16 +275,16 @@ xychart-beta
 | 1 | 2026-08-14 | `f7645c2` | LauMackinnon | 0 | 0 | 0% | 0.0% | 0 |
 | 2 | 2026-08-14 | `62b1a6d` | mfmasi | 0 | 0 | 0% | 0.0% | 0 |
 | 3 | 2026-08-14 | `b1e91df` | mfmasi | 0 | 0 | 0% | 0.0% | 0 |
-| 4 | 2026-08-14 | `0211b91` | LauMackinnon | 76 | 18 | 16% | 12.1% | 1 |
-| 5 | 2026-08-24 | `56a8f79` | dqmdz-etec | 107 | 15 | 25% | 9.1% | 1 |
-| 6 | 2026-08-24 | `fa3b047` | dqmdz-etec | 107 | 15 | 25% | 9.1% | 1 |
-| 7 | 2026-08-28 | `191ea3c` | mfmasi | 204 | 8 | 55% | 19.2% | 1 |
-| 8 | 2026-09-07 | `e86fc1a` | LauMackinnon | 314 | 9 | 64% | 9.5% | 1 |
-| 9 | 2026-09-28 | `580c966` | mfmasi | 417 | 7 | 70% | 15.5% | 1 |
-| 10 | 2026-10-09 | `3cc7274` | LauMackinnon | 482 | 6 | 73% | 15.8% | 1 |
-| 11 | 2026-10-09 | `78ab355` | mfmasi | 481 | 6 | 73% | 15.9% | 1 |
-| 12 | 2026-10-09 | `b488da6` | LauMackinnon | 690 | 6 | 86% | 10.8% | 1 |
-| 13 | 2026-10-16 | `61b98c8` | mfmasi | 1,032 | 5 | 89% | 9.7% | 1 |
+| 4 | 2026-08-14 | `0211b91` | LauMackinnon | 76 | 38 | 16% | 0.0% | 1 |
+| 5 | 2026-08-24 | `56a8f79` | dqmdz-etec | 107 | 21 | 25% | 0.0% | 1 |
+| 6 | 2026-08-24 | `fa3b047` | dqmdz-etec | 107 | 21 | 25% | 0.0% | 1 |
+| 7 | 2026-08-28 | `191ea3c` | mfmasi | 204 | 13 | 55% | 0.0% | 1 |
+| 8 | 2026-09-07 | `e86fc1a` | LauMackinnon | 314 | 11 | 64% | 0.0% | 1 |
+| 9 | 2026-09-28 | `580c966` | mfmasi | 417 | 9 | 70% | 0.0% | 1 |
+| 10 | 2026-10-09 | `3cc7274` | LauMackinnon | 482 | 7 | 73% | 5.8% | 1 |
+| 11 | 2026-10-09 | `78ab355` | mfmasi | 481 | 7 | 73% | 5.8% | 1 |
+| 12 | 2026-10-09 | `b488da6` | LauMackinnon | 690 | 6 | 86% | 3.7% | 1 |
+| 13 | 2026-10-16 | `61b98c8` | mfmasi | 1,032 | 5 | 89% | 2.3% | 1 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
