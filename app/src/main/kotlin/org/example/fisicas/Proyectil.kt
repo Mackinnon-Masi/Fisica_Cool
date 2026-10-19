@@ -1,25 +1,30 @@
 package org.example.fisicas
 
-import javafx.animation.PauseTransition
-import javafx.util.Duration
 /**
  * Representa un proyectil en movimiento parabólico (MRU en X, MRUV en Y).
  *
  * Responsabilidad única: Mantener estado cinemático y actualizarlo según leyes físicas.
  * No conoce al simulador, al cañón, ni a la renderización.
  *
- * Principios SOLID aplicados:
- * - Single Responsibility: Solo gestiona su propia cinemática
- * - Open/Closed: Extensible via herencia sin modificar código existente
- * - Liskov Substitution: Puede ser sustituido por subtipos
  */
 class Proyectil(
-    var posicionX: Double = 0.0,
-    var posicionY: Double = 0.0,
-    var velocidadX: Double = 0.0,
-    var velocidadY: Double = 0.0,
-    var activo: Boolean = true
+    posicionX: Double = 0.0,
+    posicionY: Double = 0.0,
+    velocidadX: Double = 0.0,
+    velocidadY: Double = 0.0,
+    activo: Boolean = true
 ) {
+    var posicionX: Double = posicionX
+        private set
+    var posicionY: Double = posicionY
+        private set
+    var velocidadX: Double = velocidadX
+        private set
+    var velocidadY: Double = velocidadY
+        private set
+    var activo: Boolean = activo
+        private set
+
 
     /**
      * Actualiza la cinemática del proyectil usando integración de Euler simple.
@@ -50,10 +55,22 @@ class Proyectil(
         activo = false
     }
 
-    fun runAfter(delayMillis: Long, action: () -> Unit) {
-        val pt = PauseTransition(Duration.millis(delayMillis.toDouble()))
-        pt.setOnFinished { action() }
-        pt.play()
+    fun colocarEn(x: Double, y: Double) {
+        posicionX = x
+        posicionY = y
+    }
+
+    fun lanzar(velocidadX: Double, velocidadY: Double) {
+        this.velocidadX = velocidadX
+        this.velocidadY = velocidadY
+        activo = true
+    }
+
+    fun reiniciar(x: Double, y: Double) {
+        colocarEn(x, y)
+        velocidadX = 0.0
+        velocidadY = 0.0
+        activo = true
     }
 
     override fun toString(): String {
@@ -63,5 +80,3 @@ class Proyectil(
         )
     }
 }
-
-//six seven

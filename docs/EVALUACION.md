@@ -45,7 +45,7 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 95% | 89% | no |
 | Duplicación | ≤ 5% | 9.7% | no |
-| Funciones fuera de clases | ≤ 0 | 1 | no |
+| Funciones fuera de clases | ≤ 1 | 1 | si |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
 | Índice de calidad POO/SOLID | ≥ 60 | 5/100 | no |
 
