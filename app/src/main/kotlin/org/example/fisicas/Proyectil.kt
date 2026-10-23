@@ -38,9 +38,10 @@ class Proyectil(
     * convención, un valor negativo produce aceleración hacia +Y.
      */
     fun actualizar(dt: Double, gravedad: Double): Unit {
+        //si el proyectil no esta activo, no hace nada
         if (!activo) return
 
-        // MRU en eje X (velocidad constante, sin resistencia del aire)
+        // MRU en eje X (sin resistencia del aire)
         posicionX += velocidadX * dt
 
         // MRUV en eje Y: mismo desplazamiento analítico que la trayectoria prevista.
@@ -48,24 +49,25 @@ class Proyectil(
         velocidadY -= gravedad * dt
     }
 
-    /**
-     * Marca el proyectil como inactivo (ha tocado suelo o se ha destruido).
-     */
+    //desactivar pone activo en false. No borra la posición ni las velocidades; simplemente hace que actualizar deje de moverlo.
     fun desactivar(): Unit {
         activo = false
     }
 
+    //colocarEn cambia su posición a unas coordenadas concretas.
     fun colocarEn(x: Double, y: Double) {
         posicionX = x
         posicionY = y
     }
 
+    //lanzar establece sus velocidades y lo activa.
     fun lanzar(velocidadX: Double, velocidadY: Double) {
         this.velocidadX = velocidadX
         this.velocidadY = velocidadY
         activo = true
     }
 
+    //reiniciar lo coloca donde indiques, pone ambas velocidades en cero y lo activa.
     fun reiniciar(x: Double, y: Double) {
         colocarEn(x, y)
         velocidadX = 0.0
@@ -73,6 +75,7 @@ class Proyectil(
         activo = true
     }
 
+    //toString devuelve Proyectil(x=1.50, y=5.25, vx=3.00, vy=13.00, ACTIVO) con los valores del momento
     override fun toString(): String {
         val estado = if (activo) "ACTIVO" else "INACTIVO"
         return "Proyectil(x=%.2f, y=%.2f, vx=%.2f, vy=%.2f, %s)".format(
