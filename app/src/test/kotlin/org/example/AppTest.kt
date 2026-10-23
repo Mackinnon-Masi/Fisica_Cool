@@ -4,11 +4,49 @@
 package org.example
 
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import org.example.fisicas.CalculadoraTrayectoria
+import org.example.fisicas.EstadoTrayectoria
+import org.example.fisicas.Proyectil
+import org.example.fisicas.SimulacionTrayectoria
 
-class AppTest {
-    @Test fun appHasAGreeting() {
-        val classUnderTest = App()
-        assertNotNull(classUnderTest.greeting, "app should have a greeting")
+class SimulacionTrayectoriaTest {
+    @Test
+    fun disparoAlcanzableCompletaEnElObjetivo() {
+        val proyectil = Proyectil()
+        val simulacion = SimulacionTrayectoria(
+            calculadora = CalculadoraTrayectoria(),
+            pixelesPorMetro = 100.0,
+            gravedad = 9.81,
+            proyectil = proyectil
+        )
+
+        val velocidad = simulacion.disparar(1_000.0, 0.0, rapidez = 20.0)
+
+        assertNotNull(velocidad)
+        assertEquals(EstadoTrayectoria.EN_VUELO, simulacion.estado)
+        simulacion.avanzar(velocidad.tiempoDeVuelo + 0.1)
+        assertEquals(EstadoTrayectoria.COMPLETADA, simulacion.estado)
+        assertEquals(1_000.0, proyectil.posicionX, 1e-9)
+        assertEquals(0.0, proyectil.posicionY, 1e-9)
+        assertFalse(proyectil.activo)
+    }
+
+    @Test
+    fun objetivoFueraDeAlcanceNoActivaElProyectil() {
+        val proyectil = Proyectil()
+        val simulacion = SimulacionTrayectoria(
+            calculadora = CalculadoraTrayectoria(),
+            pixelesPorMetro = 100.0,
+            gravedad = 9.81,
+            proyectil = proyectil
+        )
+
+        assertNull(simulacion.disparar(10_000.0, 0.0, rapidez = 20.0))
+        assertEquals(EstadoTrayectoria.PREPARADA, simulacion.estado)
+        assertFalse(proyectil.activo)
     }
 }

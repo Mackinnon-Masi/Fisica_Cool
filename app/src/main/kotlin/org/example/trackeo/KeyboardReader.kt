@@ -1,4 +1,4 @@
-package org.example.Trackeo
+package org.example.trackeo
 
 import javafx.event.EventHandler
 import javafx.scene.Scene
@@ -7,6 +7,7 @@ import javafx.scene.input.KeyEvent
 
 class KeyboardReader {
     private val pressedKeys = mutableSetOf<KeyCode>()
+    private val consumedPresses = mutableSetOf<KeyCode>()
     private var attachedScene: Scene? = null
 
     private val keyPressedHandler = EventHandler<KeyEvent> { event ->
@@ -25,6 +26,14 @@ class KeyboardReader {
 
     fun isKeyPressed(keyCode: KeyCode): Boolean = keyCode in pressedKeys
 
+    fun wasJustPressed(keyCode: KeyCode): Boolean {
+        if (!isKeyPressed(keyCode)) {
+            consumedPresses.remove(keyCode)
+            return false
+        }
+        return consumedPresses.add(keyCode)
+    }
+
     fun detach() {
         attachedScene?.let { scene ->
             scene.removeEventFilter(KeyEvent.KEY_PRESSED, keyPressedHandler)
@@ -32,5 +41,6 @@ class KeyboardReader {
         }
         attachedScene = null
         pressedKeys.clear()
+        consumedPresses.clear()
     }
 }
