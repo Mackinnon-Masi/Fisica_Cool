@@ -32,10 +32,8 @@ class Inicio {
         onIniciarClick: () -> Unit = {},
         onCreditosClick: () -> Unit = {}
     ): VBox {
-        // --- TÍTULO ---
         val titulo = Label("SIMULADOR MRUV").apply {
             textFill = Color.WHITE
-            // Usamos el nombre de la familia tipográfica registrada
             font = Font.font("Horizon", 72.0) 
         }
 
@@ -43,10 +41,12 @@ class Inicio {
         val btnCreditos = crearBoton("CRÉDITOS", onCreditosClick)
 
         val contenedorBotones = VBox(20.0, btnIniciar, btnCreditos).apply {
+            // Configuración del contenedor de botones
             alignment = Pos.CENTER
         }
 
         val root = VBox(80.0, titulo, contenedorBotones).apply {
+            // Configuración del contenedor principal
             alignment = Pos.CENTER
             style = "-fx-background-color: black;"
         }
@@ -56,6 +56,7 @@ class Inicio {
 
     private fun crearBoton(texto: String, accion: () -> Unit): Button {
         val estiloNormal = """
+            // Estilo CSS para el botón
             -fx-background-color: transparent;
             -fx-text-fill: white;
             -fx-border-color: white;
@@ -65,8 +66,10 @@ class Inicio {
             -fx-font-weight: light;
             -fx-cursor: hand;
         """.trimIndent()
+        
         val estiloHover = estiloNormal.replace("transparent", "#505050")
         return Button(texto).apply {
+            // Configuración de las propiedades del botón
             minWidth = ANCHO_BOTON
             prefWidth = ANCHO_BOTON
             maxWidth = ANCHO_BOTON
@@ -82,6 +85,7 @@ class Inicio {
     }
 
     private companion object {
+        // Constantes para el tamaño de los botones
         const val ANCHO_BOTON = 350.0
         const val ALTO_BOTON = 55.0
     }
