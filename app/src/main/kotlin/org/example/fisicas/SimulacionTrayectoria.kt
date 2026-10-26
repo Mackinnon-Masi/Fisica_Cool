@@ -1,11 +1,5 @@
 package org.example.fisicas
 
-enum class EstadoTrayectoria {
-    // Estado de la simulación de trayectoria, que puede ser PREPARADA, EN_VUELO o COMPLETADA
-    PREPARADA,
-    EN_VUELO,
-    COMPLETADA
-}
 
 class SimulacionTrayectoria(
     // Clase que representa la simulación de la trayectoria de un proyectil, gestionando su estado, tipo de trayectoria, tiempo transcurrido y objetivo
