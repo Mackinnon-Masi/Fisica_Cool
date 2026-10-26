@@ -3,21 +3,20 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-10-25.
+> Generado: 2026-10-26.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
 | Índice de calidad POO/SOLID | **4/100** |
-| Código (LOC) | 1,285 |
+| Código (LOC) | 1,315 |
 | Archivos de código | 19 |
 | Clases (bien usadas) | 20 (2 OK) |
-| Código dentro de clases (%POO) | 86% |
+| Código dentro de clases (%POO) | 87% |
 | Funciones fuera de clases | 1 |
 | Duplicación lógica | 0.0% |
 | Señales S/O/L/I/D | 9/0/2/0/10 |
-| Tope duro aplicado | `SUELTAS` → índice ≤ 60 |
 
 > Este informe **describe** lo que el análisis midió con los criterios ya establecidos de la materia. No es una nota.
 
@@ -28,13 +27,13 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 | Semáforo | Resultado |
 |---|---|
 | Aprobar (`estandar`) | **no cumple** — 3/4 |
-| Destacar (`exigente`) | **no cumple** — 1/5 |
+| Destacar (`exigente`) | **no cumple** — 2/5 |
 
 **Criterios para aprobar**
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
-| Código dentro de clases (%POO) | ≥ 85% | 86% | sí |
+| Código dentro de clases (%POO) | ≥ 85% | 87% | sí |
 | Duplicación lógica | ≤ 10% | 0.0% | sí |
 | Funciones fuera de clases | ≤ 1 | 1 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
@@ -43,9 +42,9 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
-| Código dentro de clases (%POO) | ≥ 95% | 86% | no |
+| Código dentro de clases (%POO) | ≥ 95% | 87% | no |
 | Duplicación lógica | ≤ 5% | 0.0% | sí |
-| Funciones fuera de clases | ≤ 0 | 1 | no |
+| Funciones fuera de clases | ≤ 1 | 1 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
 | Índice de calidad POO/SOLID | ≥ 60 | 4/100 | no |
 
@@ -53,12 +52,12 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 
 | Autor | Commits | Código (LOC) | Tests (LOC) | Docs (LOC) | Días activos | % del código |
 |---|---:|---:|---:|---:|---:|---:|
-| LauMackinnon | 16 | 1,117 | 52 | 2 | 11 | 80% |
-| mfmasi | 10 | 286 | 0 | 11 | 7 | 20% |
+| LauMackinnon | 16 | 1,115 | 52 | 1 | 11 | 78% |
+| mfmasi | 11 | 316 | 0 | 11 | 8 | 22% |
 
 > _El LOC de autoría lo calcula RepoSense sobre el historial y puede diferir del LOC de código del análisis de calidad (que mira solo el estado de `main`)._
 
-> **Reparto del trabajo:** LauMackinnon concentra el 80% de las líneas de código. Un reparto muy desigual suele indicar que la integración no fue realmente en equipo; vale la pena reconstruir cómo se coordinó.
+> **Reparto del trabajo:** LauMackinnon concentra el 78% de las líneas de código. Un reparto muy desigual suele indicar que la integración no fue realmente en equipo; vale la pena reconstruir cómo se coordinó.
 
 ## 3. Aspectos evaluados
 
@@ -80,17 +79,13 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Qué porción del código vive dentro de clases (no de funciones sueltas).
 - **Por qué importa:** El diseño orientado a objetos es el eje de la materia: el comportamiento debería vivir como método de una clase.
-- **Tu resultado:** **86.5%** del código dentro de clases
+- **Tu resultado:** **86.8%** del código dentro de clases
 
-### 4. Funciones fuera de clases (sueltas) — con señales
+### 4. Funciones fuera de clases (sueltas) — sin señales
 
 - **Qué mide:** Funciones de nivel de módulo que no pertenecen a ninguna clase (en esta materia el comportamiento debe ser método de una clase).
 - **Por qué importa:** Son la forma más directa de código procedural en un proyecto que debería ser orientado a objetos.
 - **Tu resultado:** **1** función(es) fuera de clases
-- **Para investigar la causa:**
-    - ¿Esa función se dejó suelta por urgencia o por desconocer dónde ubicarla?
-    - ¿Qué clase debería ser responsable de ese comportamiento?
-    - ¿Había una convención sobre dónde poner cada cosa?
 
 ### 5. Clase demasiado grande (SRP) (god) — con señales
 
@@ -136,7 +131,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Cuánto depende una clase de otros tipos del proyecto.
 - **Por qué importa:** Piezas muy enlazadas hacen que un cambio se propague y que sea difícil reemplazar partes.
-- **Tu resultado:** **13** clase(s) muy acoplada(s)
+- **Tu resultado:** **14** clase(s) muy acoplada(s)
 - **Para investigar la causa:**
     - ¿La clase conoce detalles internos de muchas otras?
     - ¿Se puede cambiar una parte sin tocar las demás?
@@ -228,8 +223,9 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 - `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`
 - `app/src/main/kotlin/org/example/visuales/Pantalla.kt`
 
-**Acoplamiento alto (CBO) (acoplamiento)** — 13 archivo(s):
+**Acoplamiento alto (CBO) (acoplamiento)** — 14 archivo(s):
 - `app/src/main/kotlin/org/example/fisicas/Proyectil.kt`
+- `app/src/main/kotlin/org/example/fisicas/SimulacionTrayectoria.kt`
 - `app/src/main/kotlin/org/example/trackeo/KeyboardReader.kt`
 - `app/src/main/kotlin/org/example/trackeo/Mouse.kt`
 - `app/src/main/kotlin/org/example/visuales/ControladorTrayectoria.kt`
@@ -272,14 +268,14 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 
 ## 5. Evolución por commit
 
-Métricas calculadas sobre el estado de `main` en **cada commit** (17 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
+Métricas calculadas sobre el estado de `main` en **cada commit** (18 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
 
 ```mermaid
 xychart-beta
     title "Índice POO/SOLID a lo largo de los commits"
-    x-axis ["f7645c2", "62b1a6d", "b1e91df", "0211b91", "56a8f79", "fa3b047", "191ea3c", "e86fc1a", "580c966", "3cc7274", "78ab355", "b488da6", "61b98c8", "30f9976", "77e899d", "61fb4df", "9633dd2"]
+    x-axis ["f7645c2", "62b1a6d", "b1e91df", "0211b91", "56a8f79", "fa3b047", "191ea3c", "e86fc1a", "580c966", "3cc7274", "78ab355", "b488da6", "61b98c8", "30f9976", "77e899d", "61fb4df", "9633dd2", "72b08f9"]
     y-axis "Índice" 0 --> 100
-    line [0, 0, 0, 38, 21, 21, 13, 11, 9, 7, 7, 6, 5, 5, 4, 4, 4]
+    line [0, 0, 0, 38, 21, 21, 13, 11, 9, 7, 7, 6, 5, 5, 4, 4, 4, 4]
 ```
 
 | # | Fecha | Commit | Autor | LOC | Índice | %POO | Duplic. | Sueltas |
@@ -301,6 +297,7 @@ xychart-beta
 | 15 | 2026-10-23 | `77e899d` | mfmasi | 1,195 | 4 | 86% | 0.0% | 1 |
 | 16 | 2026-10-23 | `61fb4df` | mfmasi | 1,272 | 4 | 86% | 0.0% | 1 |
 | 17 | 2026-10-23 | `9633dd2` | mfmasi | 1,285 | 4 | 86% | 0.0% | 1 |
+| 18 | 2026-10-26 | `72b08f9` | mfmasi | 1,315 | 4 | 87% | 0.0% | 1 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
