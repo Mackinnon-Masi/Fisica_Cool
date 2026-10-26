@@ -24,7 +24,7 @@ class VistaSimulacion(
     // El panel principal donde se dibujan los elementos de la simulación
     private val pane = Pane()
     private val proyectil = simulacion.proyectil
-    private val bala = Circle(proyectil.posicionX, proyectil.posicionY, 12.0).apply {
+    private val bala = Circle(proyectil.posicionX, proyectil.posicionY, 8.0).apply {
         fill = Color.WHITE
         stroke = Color.WHITE
         strokeWidth = 3.0
