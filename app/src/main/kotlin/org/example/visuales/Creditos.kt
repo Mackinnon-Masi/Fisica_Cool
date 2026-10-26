@@ -11,6 +11,7 @@ import javafx.scene.text.Font
 class Creditos {
 
     init {
+        // Carga de fuentes personalizadas para los créditos
         val montserratBold = javaClass.getResourceAsStream("/fonts/Montserrat-Bold.ttf")
         val montserratRegular = javaClass.getResourceAsStream("/fonts/Montserrat.ttf")
 
@@ -19,18 +20,17 @@ class Creditos {
     }
 
     fun crearVista(onVolverClick: () -> Unit = {}): BorderPane {
-
+        //botón de volver a la pantalla principal
         val btnVolver = BotonVolver(onVolverClick)
 
         val bloque1 = crearBloqueProgramador("Malena Masi Fragapane")
         val bloque2 = crearBloqueProgramador("Lautaro Mackinnon")
 
-        // --- CONTENEDOR CENTRAL DE TEXTO ---
+        // contenedor central del texto
         val contenedorTexto = VBox(60.0, bloque1, bloque2).apply {
             alignment = Pos.CENTER
         }
 
-        // --- CONTENEDOR GENERAL (BorderPane) ---
         val root = BorderPane().apply {
             top = btnVolver
             center = contenedorTexto
@@ -42,6 +42,7 @@ class Creditos {
     }
 
     private fun crearBloqueProgramador(nombre: String): VBox {
+        // Crea un bloque de créditos para un programador con su rol y nombre, aplicando estilos de fuente y color
         val rol = Label("Programador").apply {
             textFill = Color.WHITE
             font = Font.font("Montserrat", javafx.scene.text.FontWeight.BOLD, 48.0)
