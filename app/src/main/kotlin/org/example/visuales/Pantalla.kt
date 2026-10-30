@@ -74,6 +74,7 @@ class Pantalla : Application() {
                 mostrarVista(vistaSimulacion.raiz)
                 posicionDisparoY = vistaSimulacion.posicionInicialY()
                 controlador.prepararPartida(posicionDisparoY)
+                vistaSimulacion.abrirAyuda()
             },
             onCreditosClick = { mostrarVista(rootCreditos) }
         )

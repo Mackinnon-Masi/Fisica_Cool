@@ -101,6 +101,7 @@ class ControladorTrayectoria(
         }
         // Muestra la trayectoria y los ejes, y limpia cualquier error de disparo previo
         vista.mostrarTrayectoria(velocidad, objetivo.x, objetivo.y)
+        vista.registrarLanzamiento(velocidad)
         vista.mostrarEjes()
         vista.limpiarErrorDeDisparo()
         ultimoTiempo = now
