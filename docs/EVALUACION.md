@@ -3,20 +3,20 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-10-29.
+> Generado: 2026-10-30.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
-| Índice de calidad POO/SOLID | **4/100** |
-| Código (LOC) | 1,315 |
-| Archivos de código | 19 |
-| Clases (bien usadas) | 20 (2 OK) |
-| Código dentro de clases (%POO) | 87% |
+| Índice de calidad POO/SOLID | **9/100** |
+| Código (LOC) | 1,417 |
+| Archivos de código | 21 |
+| Clases (bien usadas) | 20 (4 OK) |
+| Código dentro de clases (%POO) | 86% |
 | Funciones fuera de clases | 1 |
 | Duplicación lógica | 0.0% |
-| Señales S/O/L/I/D | 9/0/2/0/10 |
+| Señales S/O/L/I/D | 4/0/2/0/4 |
 
 > Este informe **describe** lo que el análisis midió con los criterios ya establecidos de la materia. No es una nota.
 
@@ -33,31 +33,31 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
-| Código dentro de clases (%POO) | ≥ 85% | 87% | sí |
+| Código dentro de clases (%POO) | ≥ 85% | 86% | sí |
 | Duplicación lógica | ≤ 10% | 0.0% | sí |
 | Funciones fuera de clases | ≤ 1 | 1 | sí |
-| Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
+| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM), Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
 
 **Criterios para destacar**
 
 | Criterio | Requisito | Tu resultado | Cumple |
 |---|---|---|---|
-| Código dentro de clases (%POO) | ≥ 95% | 87% | no |
+| Código dentro de clases (%POO) | ≥ 95% | 86% | no |
 | Duplicación lógica | ≤ 5% | 0.0% | sí |
 | Funciones fuera de clases | ≤ 1 | 1 | sí |
 | Señales POO/SOLID críticas | ninguna | Clase demasiado grande (SRP), Baja cohesión (LCOM), Complejidad alta, Acoplamiento alto (CBO), Override vacío / 'no implementado' (LSP) | no |
-| Índice de calidad POO/SOLID | ≥ 60 | 4/100 | no |
+| Índice de calidad POO/SOLID | ≥ 60 | 9/100 | no |
 
 ## 2. Autoría (RepoSense)
 
 | Autor | Commits | Código (LOC) | Tests (LOC) | Docs (LOC) | Días activos | % del código |
 |---|---:|---:|---:|---:|---:|---:|
-| LauMackinnon | 16 | 1,115 | 52 | 1 | 11 | 78% |
-| mfmasi | 11 | 316 | 0 | 11 | 8 | 22% |
+| LauMackinnon | 19 | 1,104 | 52 | 1 | 13 | 72% |
+| mfmasi | 13 | 438 | 0 | 11 | 9 | 28% |
 
 > _El LOC de autoría lo calcula RepoSense sobre el historial y puede diferir del LOC de código del análisis de calidad (que mira solo el estado de `main`)._
 
-> **Reparto del trabajo:** LauMackinnon concentra el 78% de las líneas de código. Un reparto muy desigual suele indicar que la integración no fue realmente en equipo; vale la pena reconstruir cómo se coordinó.
+> **Reparto del trabajo:** LauMackinnon concentra el 72% de las líneas de código. Un reparto muy desigual suele indicar que la integración no fue realmente en equipo; vale la pena reconstruir cómo se coordinó.
 
 ## 3. Aspectos evaluados
 
@@ -67,7 +67,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Un resumen numérico (0-100) que combina la riqueza de clases bien usadas con la penalización por señales POO/SOLID y duplicación, y luego aplica topes duros.
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
-- **Tu resultado:** índice **4/100**
+- **Tu resultado:** índice **9/100**
 
 ### 2. Duplicación lógica (DRY) (duplicacion) — sin señales
 
@@ -79,7 +79,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Qué porción del código vive dentro de clases (no de funciones sueltas).
 - **Por qué importa:** El diseño orientado a objetos es el eje de la materia: el comportamiento debería vivir como método de una clase.
-- **Tu resultado:** **86.8%** del código dentro de clases
+- **Tu resultado:** **85.6%** del código dentro de clases
 
 ### 4. Funciones fuera de clases (sueltas) — sin señales
 
@@ -89,9 +89,9 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 ### 5. Clase demasiado grande (SRP) (god) — con señales
 
-- **Qué mide:** Clases con muchas líneas, métodos o campos a la vez.
+- **Qué mide:** Clases con demasiadas líneas o métodos de LÓGICA. No cuentan los getters/setters triviales ni la cantidad de campos por sí sola.
 - **Por qué importa:** Una clase que hace de todo cambia por muchos motivos y cuesta entenderla y probarla.
-- **Tu resultado:** **6** clase(s) demasiado grande(s)
+- **Tu resultado:** **1** clase(s) demasiado grande(s)
 - **Para investigar la causa:**
     - ¿La clase creció por acumulación de responsabilidades?
     - ¿Qué partes de la clase se usan siempre juntas y cuáles no?
@@ -131,7 +131,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Cuánto depende una clase de otros tipos del proyecto.
 - **Por qué importa:** Piezas muy enlazadas hacen que un cambio se propague y que sea difícil reemplazar partes.
-- **Tu resultado:** **14** clase(s) muy acoplada(s)
+- **Tu resultado:** **6** clase(s) muy acoplada(s)
 - **Para investigar la causa:**
     - ¿La clase conoce detalles internos de muchas otras?
     - ¿Se puede cambiar una parte sin tocar las demás?
@@ -169,7 +169,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Instanciación directa de clases concretas y ausencia de interfaces o clases abstractas pese al acoplamiento.
 - **Por qué importa:** Depender de implementaciones concretas dificulta cambiar o probar una parte sin arrastrar las demás.
-- **Tu resultado:** **10** dependencia(s) de concretos sin abstracciones
+- **Tu resultado:** **4** dependencia(s) de concretos sin abstracciones
 - **Para investigar la causa:**
     - ¿La clase crea por dentro a sus colaboradores en vez de recibirlos?
     - ¿Hay puntos de variación que convendría expresar como abstracción?
@@ -205,16 +205,11 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 Archivos donde el análisis encontró cada señal (sin número de línea, a propósito):
 
-**Clase demasiado grande (SRP) (god)** — 6 archivo(s):
-- `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`
-- `app/src/main/kotlin/org/example/fisicas/SimulacionTrayectoria.kt`
-- `app/src/main/kotlin/org/example/visuales/ControladorTrayectoria.kt`
-- `app/src/main/kotlin/org/example/visuales/Inicio.kt`
+**Clase demasiado grande (SRP) (god)** — 1 archivo(s):
 - `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorEjes.kt`
 
 **Baja cohesión (LCOM) (cohesion)** — 1 archivo(s):
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorEjes.kt`
+- `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`
 
 **Complejidad alta (complejidad)** — 1 archivo(s):
 - `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`
@@ -223,59 +218,46 @@ Archivos donde el análisis encontró cada señal (sin número de línea, a prop
 - `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`
 - `app/src/main/kotlin/org/example/visuales/Pantalla.kt`
 
-**Acoplamiento alto (CBO) (acoplamiento)** — 14 archivo(s):
-- `app/src/main/kotlin/org/example/fisicas/Proyectil.kt`
+**Acoplamiento alto (CBO) (acoplamiento)** — 6 archivo(s):
 - `app/src/main/kotlin/org/example/fisicas/SimulacionTrayectoria.kt`
-- `app/src/main/kotlin/org/example/trackeo/KeyboardReader.kt`
-- `app/src/main/kotlin/org/example/trackeo/Mouse.kt`
 - `app/src/main/kotlin/org/example/visuales/ControladorTrayectoria.kt`
 - `app/src/main/kotlin/org/example/visuales/Creditos.kt`
-- `app/src/main/kotlin/org/example/visuales/Inicio.kt`
 - `app/src/main/kotlin/org/example/visuales/Pantalla.kt`
 - `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorAngulo.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorEjes.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorRecorrido.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorTrayectoria.kt`
 - `app/src/test/kotlin/org/example/AppTest.kt`
 
 **Override vacío o 'no implementado' (LSP) (lsp)** — 1 archivo(s):
 - `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorRecorrido.kt`
 
-**Dependencia de concretos y falta de abstracciones (DIP) (dip)** — 10 archivo(s):
-- `app/src/main/kotlin/org/example/fisicas/Proyectil.kt`
+**Dependencia de concretos y falta de abstracciones (DIP) (dip)** — 4 archivo(s):
 - `app/src/main/kotlin/org/example/visuales/Creditos.kt`
-- `app/src/main/kotlin/org/example/visuales/Inicio.kt`
 - `app/src/main/kotlin/org/example/visuales/Pantalla.kt`
 - `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorAngulo.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorEjes.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorRecorrido.kt`
-- `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorTrayectoria.kt`
 - `app/src/test/kotlin/org/example/AppTest.kt`
 
 **Clase sin métodos (solo datos) (data)** — 1 archivo(s):
 - `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`
 
-**Campos públicos (encapsulación) (encapsulacion)** — 7 archivo(s):
+**Campos públicos (encapsulación) (encapsulacion)** — 8 archivo(s):
 - `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`
 - `app/src/main/kotlin/org/example/fisicas/Proyectil.kt`
 - `app/src/main/kotlin/org/example/fisicas/SimulacionTrayectoria.kt`
 - `app/src/main/kotlin/org/example/visuales/Creditos.kt`
 - `app/src/main/kotlin/org/example/visuales/Inicio.kt`
+- `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`
 - `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorAngulo.kt`
 - `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorEjes.kt`
 
 ## 5. Evolución por commit
 
-Métricas calculadas sobre el estado de `main` en **cada commit** (18 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
+Métricas calculadas sobre el estado de `main` en **cada commit** (21 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
 
 ```mermaid
 xychart-beta
     title "Índice POO/SOLID a lo largo de los commits"
-    x-axis ["f7645c2", "62b1a6d", "b1e91df", "0211b91", "56a8f79", "fa3b047", "191ea3c", "e86fc1a", "580c966", "3cc7274", "78ab355", "b488da6", "61b98c8", "30f9976", "77e899d", "61fb4df", "9633dd2", "72b08f9"]
+    x-axis ["f7645c2", "62b1a6d", "b1e91df", "0211b91", "56a8f79", "fa3b047", "191ea3c", "e86fc1a", "580c966", "3cc7274", "78ab355", "b488da6", "61b98c8", "30f9976", "77e899d", "61fb4df", "9633dd2", "72b08f9", "fd73c60", "4249243", "bbdf447"]
     y-axis "Índice" 0 --> 100
-    line [0, 0, 0, 38, 21, 21, 13, 11, 9, 7, 7, 6, 5, 5, 4, 4, 4, 4]
+    line [0, 0, 0, 38, 21, 21, 15, 14, 12, 10, 10, 10, 8, 10, 10, 10, 10, 10, 10, 9, 9]
 ```
 
 | # | Fecha | Commit | Autor | LOC | Índice | %POO | Duplic. | Sueltas |
@@ -286,18 +268,21 @@ xychart-beta
 | 4 | 2026-08-14 | `0211b91` | LauMackinnon | 76 | 38 | 16% | 0.0% | 1 |
 | 5 | 2026-08-24 | `56a8f79` | dqmdz-etec | 107 | 21 | 25% | 0.0% | 1 |
 | 6 | 2026-08-24 | `fa3b047` | dqmdz-etec | 107 | 21 | 25% | 0.0% | 1 |
-| 7 | 2026-08-28 | `191ea3c` | mfmasi | 204 | 13 | 55% | 0.0% | 1 |
-| 8 | 2026-09-07 | `e86fc1a` | LauMackinnon | 314 | 11 | 64% | 0.0% | 1 |
-| 9 | 2026-09-28 | `580c966` | mfmasi | 417 | 9 | 70% | 0.0% | 1 |
-| 10 | 2026-10-09 | `3cc7274` | LauMackinnon | 482 | 7 | 73% | 5.8% | 1 |
-| 11 | 2026-10-09 | `78ab355` | mfmasi | 481 | 7 | 73% | 5.8% | 1 |
-| 12 | 2026-10-09 | `b488da6` | LauMackinnon | 690 | 6 | 86% | 3.7% | 1 |
-| 13 | 2026-10-16 | `61b98c8` | mfmasi | 1,032 | 5 | 89% | 2.3% | 1 |
-| 14 | 2026-10-23 | `30f9976` | LauMackinnon | 1,159 | 5 | 85% | 0.0% | 1 |
-| 15 | 2026-10-23 | `77e899d` | mfmasi | 1,195 | 4 | 86% | 0.0% | 1 |
-| 16 | 2026-10-23 | `61fb4df` | mfmasi | 1,272 | 4 | 86% | 0.0% | 1 |
-| 17 | 2026-10-23 | `9633dd2` | mfmasi | 1,285 | 4 | 86% | 0.0% | 1 |
-| 18 | 2026-10-26 | `72b08f9` | mfmasi | 1,315 | 4 | 87% | 0.0% | 1 |
+| 7 | 2026-08-28 | `191ea3c` | mfmasi | 204 | 15 | 55% | 0.0% | 1 |
+| 8 | 2026-09-07 | `e86fc1a` | LauMackinnon | 314 | 14 | 64% | 0.0% | 1 |
+| 9 | 2026-09-28 | `580c966` | mfmasi | 417 | 12 | 70% | 0.0% | 1 |
+| 10 | 2026-10-09 | `3cc7274` | LauMackinnon | 482 | 10 | 73% | 5.8% | 1 |
+| 11 | 2026-10-09 | `78ab355` | mfmasi | 481 | 10 | 73% | 5.8% | 1 |
+| 12 | 2026-10-09 | `b488da6` | LauMackinnon | 690 | 10 | 86% | 3.7% | 1 |
+| 13 | 2026-10-16 | `61b98c8` | mfmasi | 1,032 | 8 | 89% | 2.3% | 1 |
+| 14 | 2026-10-23 | `30f9976` | LauMackinnon | 1,159 | 10 | 85% | 0.0% | 1 |
+| 15 | 2026-10-23 | `77e899d` | mfmasi | 1,195 | 10 | 86% | 0.0% | 1 |
+| 16 | 2026-10-23 | `61fb4df` | mfmasi | 1,272 | 10 | 86% | 0.0% | 1 |
+| 17 | 2026-10-23 | `9633dd2` | mfmasi | 1,285 | 10 | 86% | 0.0% | 1 |
+| 18 | 2026-10-26 | `72b08f9` | mfmasi | 1,315 | 10 | 87% | 0.0% | 1 |
+| 19 | 2026-10-30 | `fd73c60` | LauMackinnon | 1,318 | 10 | 85% | 0.0% | 1 |
+| 20 | 2026-10-30 | `4249243` | mfmasi | 1,417 | 9 | 86% | 0.0% | 1 |
+| 21 | 2026-10-30 | `bbdf447` | mfmasi | 1,417 | 9 | 86% | 0.0% | 1 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
