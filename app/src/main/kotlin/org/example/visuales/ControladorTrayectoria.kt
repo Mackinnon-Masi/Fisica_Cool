@@ -45,8 +45,8 @@ class ControladorTrayectoria(
     private fun actualizarModoEdicion() {
         // Alterna el modo de edición si se presiona la tecla 'E' y la escena actual es la vista de simulación
         if (escena.root !== vista.raiz || !teclado.wasJustPressed(KeyCode.E)) return
-        if (simulacion.estado == EstadoTrayectoria.EN_VUELO) {
-            // Si la simulación está en vuelo, reinicia la simulación y la vista para permitir la edición
+        if (simulacion.estado != EstadoTrayectoria.PREPARADA) {
+            // Si la simulación está en vuelo o ya terminó, reiníciala para permitir la edición
             simulacion.reiniciar(origenY)
             vista.sincronizarProyectil()
             vista.limpiarErrorDeDisparo()
