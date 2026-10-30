@@ -139,7 +139,7 @@ class VistaSimulacion(
             padding = Insets(20.0, 0.0, 0.0, 30.0)
         }
         raiz = StackPane(contenido, capaAyuda)
-        etiquetaCoordenadas = mouseTracker.attachTo(pane)
+        etiquetaCoordenadas = mouseTracker.attachTo(raiz)
     }
 
     fun objetivoActual(): Point2D = pane.sceneToLocal(mouseTracker.lastX, mouseTracker.lastY)
