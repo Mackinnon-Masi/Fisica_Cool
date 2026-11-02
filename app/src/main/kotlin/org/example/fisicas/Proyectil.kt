@@ -7,16 +7,21 @@ package org.example.fisicas
  * No conoce al simulador, al cañón, ni a la renderización.
  *
  */
+interface ProyectilLectura {
+    val posicionX: Double
+    val posicionY: Double
+}
+
 class Proyectil(
     posicionX: Double = 0.0,
     posicionY: Double = 0.0,
     velocidadX: Double = 0.0,
     velocidadY: Double = 0.0,
     activo: Boolean = true
-) {
-    var posicionX: Double = posicionX
+) : ProyectilLectura {
+    override var posicionX: Double = posicionX
         private set
-    var posicionY: Double = posicionY
+    override var posicionY: Double = posicionY
         private set
     var velocidadX: Double = velocidadX
         private set

@@ -4,14 +4,14 @@ import javafx.animation.AnimationTimer
 import javafx.scene.Scene
 import javafx.scene.input.KeyCode
 import org.example.fisicas.EstadoTrayectoria
-import org.example.fisicas.SimulacionTrayectoria
-import org.example.trackeo.KeyboardReader
+import org.example.fisicas.SimulacionTrayectoriaPort
+import org.example.trackeo.LectorTeclas
 
 class ControladorTrayectoria(
     // Controlador de la simulación de trayectoria, que gestiona la interacción del usuario y la actualización de la vista
-    private val simulacion: SimulacionTrayectoria,
-    private val vista: VistaSimulacion,
-    private val teclado: KeyboardReader,
+    private val simulacion: SimulacionTrayectoriaPort,
+    private val vista: VistaTrayectoria,
+    private val teclado: LectorTeclas,
     private val escena: Scene
 ) {
     private var modoEdicion = false

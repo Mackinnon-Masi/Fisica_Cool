@@ -5,7 +5,11 @@ import javafx.scene.Scene
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 
-class KeyboardReader {
+fun interface LectorTeclas {
+    fun wasJustPressed(keyCode: KeyCode): Boolean
+}
+
+class KeyboardReader : LectorTeclas {
     // Variables para almacenar el estado de las teclas
     private val pressedKeys = mutableSetOf<KeyCode>()
     private val consumedPresses = mutableSetOf<KeyCode>()
@@ -32,7 +36,7 @@ class KeyboardReader {
     fun isKeyPressed(keyCode: KeyCode): Boolean = keyCode in pressedKeys
     // Verifica si una tecla específica está actualmente presionada
 
-    fun wasJustPressed(keyCode: KeyCode): Boolean {
+    override fun wasJustPressed(keyCode: KeyCode): Boolean {
         // Verifica si una tecla específica fue presionada recientemente y no ha sido consumida
         if (!isKeyPressed(keyCode)) {
             // Si la tecla no está presionada, se elimina de las teclas consumidas
