@@ -289,13 +289,13 @@ xychart-beta
 | 2026-10-23 | **Sí** | Fisica_Cool | 1 / 3 |
 | 2026-10-26 | **Sí** | Fisica_Cool | 2 / 1 |
 
-#### Aportes fuera del calendario de clases
+#### Aportes fuera del calendario de clases — LauMackinnon
 
-**1 fecha fuera del calendario** · 1 commit · 1 merge
+**LauMackinnon — 1 fecha fuera del calendario** · 1 commit · 1 merge
 
-| Fecha | Repositorios | Commits / merges |
-|---|---|--:|
-| 2026-10-30 | Fisica_Cool | 1 / 1 |
+| Alumno | Fecha | Repositorios | Commits / merges |
+|---|---|---|---|
+| LauMackinnon (`LauMackinnon`) | 2026-10-30 | Fisica_Cool | 1 / 1 |
 
 ### mfmasi
 
@@ -321,14 +321,14 @@ xychart-beta
 | 2026-10-23 | **Sí** | Fisica_Cool | 3 / 5 |
 | 2026-10-26 | **Sí** | Fisica_Cool | 1 / 1 |
 
-#### Aportes fuera del calendario de clases
+#### Aportes fuera del calendario de clases — mfmasi
 
-**2 fechas fuera del calendario** · 3 commits · 4 merges
+**mfmasi — 2 fechas fuera del calendario** · 3 commits · 4 merges
 
-| Fecha | Repositorios | Commits / merges |
-|---|---|--:|
-| 2026-10-30 | Fisica_Cool | 2 / 2 |
-| 2026-11-02 | Fisica_Cool | 1 / 2 |
+| Alumno | Fecha | Repositorios | Commits / merges |
+|---|---|---|---|
+| mfmasi (`mfmasi`) | 2026-10-30 | Fisica_Cool | 2 / 2 |
+| mfmasi (`mfmasi`) | 2026-11-02 | Fisica_Cool | 1 / 2 |
 
 <!-- actividad-clases:fin -->
 
