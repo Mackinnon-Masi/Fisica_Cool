@@ -255,11 +255,11 @@ xychart-beta
 <!-- actividad-clases:inicio -->
 ## Actividad en días de clase
 
-> Período **2026-08-14 → 2026-10-29** · **17 clases** (lunes, viernes) · calendario oficial de la materia.
+> Período evaluado **2026-08-14 → 2026-11-07** · **20 clases** (lunes, viernes) · días de clase del calendario, extendidos hasta la fecha de corte.
 >
 > `Commits` = commits de trabajo (no-merge); `Merges` = merges de PR (también son push). Los días sin actividad dicen **sin actividad**. El cuadro principal usa sólo las fechas de clase del calendario oficial.
 >
-> **Aportes fuera del calendario:** cada alumno tiene un cuadro aparte con las fechas no lectivas con actividad, desde **2026-08-14** hasta **2026-11-06** (ventana de aportes). Esas fechas no forman parte del cuadro principal, pero se muestran para no perder trabajo hecho en fines de semana, feriados o después del período.
+> **Aportes fuera del calendario:** cada alumno tiene un cuadro aparte con las fechas no lectivas con actividad, desde **2026-08-14** hasta **2026-11-07** (ventana de aportes). Esas fechas no forman parte del cuadro principal, pero se muestran para no perder trabajo hecho en fines de semana, feriados o después del período.
 >
 > Se recorre `git log --all` sobre un mirror (todas las ramas y `refs/pull/*`), con deduplicación por commit. Fecha = fecha de autor en UTC-3. Los commits locales no pusheados no se ven. Si el trabajo fue en pareja y el commit es de otra persona, figura a nombre del autor del commit; para reflejarlo, usar `Co-authored-by` o una nota manual.
 >
@@ -267,7 +267,7 @@ xychart-beta
 
 ### LauMackinnon
 
-**12/17 clases con actividad** · 18 commits · 14 merges
+**13/20 clases con actividad** · 19 commits · 15 merges
 
 | Fecha | Marca | Repositorios | Commits / merges |
 |---|:--:|---|--:|
@@ -288,18 +288,17 @@ xychart-beta
 | 2026-10-19 | **Sí** | Fisica_Cool | 1 / 0 |
 | 2026-10-23 | **Sí** | Fisica_Cool | 1 / 3 |
 | 2026-10-26 | **Sí** | Fisica_Cool | 2 / 1 |
+| 2026-10-30 | **Sí** | Fisica_Cool | 1 / 1 |
+| 2026-11-02 | No | sin actividad | 0 / 0 |
+| 2026-11-06 | No | sin actividad | 0 / 0 |
 
 #### Aportes fuera del calendario de clases — LauMackinnon
 
-**LauMackinnon — 1 fecha fuera del calendario** · 1 commit · 1 merge
-
-| Alumno | Fecha | Repositorios | Commits / merges |
-|---|---|---|---|
-| LauMackinnon (`LauMackinnon`) | 2026-10-30 | Fisica_Cool | 1 / 1 |
+_Sin aportes fuera del calendario de clases para LauMackinnon._
 
 ### mfmasi
 
-**8/17 clases con actividad** · 11 commits · 14 merges
+**10/20 clases con actividad** · 14 commits · 18 merges
 
 | Fecha | Marca | Repositorios | Commits / merges |
 |---|:--:|---|--:|
@@ -320,15 +319,13 @@ xychart-beta
 | 2026-10-19 | No | sin actividad | 0 / 0 |
 | 2026-10-23 | **Sí** | Fisica_Cool | 3 / 5 |
 | 2026-10-26 | **Sí** | Fisica_Cool | 1 / 1 |
+| 2026-10-30 | **Sí** | Fisica_Cool | 2 / 2 |
+| 2026-11-02 | **Sí** | Fisica_Cool | 1 / 2 |
+| 2026-11-06 | No | sin actividad | 0 / 0 |
 
 #### Aportes fuera del calendario de clases — mfmasi
 
-**mfmasi — 2 fechas fuera del calendario** · 3 commits · 4 merges
-
-| Alumno | Fecha | Repositorios | Commits / merges |
-|---|---|---|---|
-| mfmasi (`mfmasi`) | 2026-10-30 | Fisica_Cool | 2 / 2 |
-| mfmasi (`mfmasi`) | 2026-11-02 | Fisica_Cool | 1 / 2 |
+_Sin aportes fuera del calendario de clases para mfmasi._
 
 <!-- actividad-clases:fin -->
 
