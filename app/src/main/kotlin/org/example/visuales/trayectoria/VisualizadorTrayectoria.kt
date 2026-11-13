@@ -2,13 +2,13 @@ package org.example.visuales.trayectoria
 
 import javafx.scene.layout.Pane
 
-class VisualizadorTrayectoria(contenedor: Pane) {
+class VisualizadorTrayectoria(contenedor: Pane) : IVisualizadorTrayectoria {
     // Composición de los visualizadores de recorrido, ejes y ángulo
-    private val recorrido = VisualizadorRecorrido(contenedor)
-    private val ejes = VisualizadorEjes(contenedor)
-    private val angulo = VisualizadorAngulo(contenedor)
+    private val recorrido: IVisualizadorRecorrido = VisualizadorRecorrido(contenedor)
+    private val ejes: IVisualizadorEjes = VisualizadorEjes(contenedor)
+    private val angulo: IVisualizadorAngulo = VisualizadorAngulo(contenedor)
 
-    fun mostrarPrediccion(
+    override fun mostrarPrediccion(
         // Calcular y mostrar la predicción de la trayectoria, ejes y ángulo
         origenX: Double,
         origenY: Double,
@@ -32,14 +32,14 @@ class VisualizadorTrayectoria(contenedor: Pane) {
         angulo.mostrar(origenX, origenY, velocidadX, velocidadY)
     }
 
-    fun actualizarProgreso(tiempoTranscurrido: Double) = recorrido.actualizar(tiempoTranscurrido)
+    override fun actualizarProgreso(tiempoTranscurrido: Double) = recorrido.actualizar(tiempoTranscurrido)
     // Actualizar la visualización del progreso de la trayectoria según el tiempo transcurrido
-    fun mostrarEjes(origenX: Double, origenY: Double) = ejes.mostrar(origenX, origenY)
+    override fun mostrarEjes(origenX: Double, origenY: Double) = ejes.mostrar(origenX, origenY)
     // Mostrar los ejes en la posición del origen
-    fun actualizarEjes(posicionX: Double, posicionY: Double) = ejes.actualizar(posicionX, posicionY)
+    override fun actualizarEjes(posicionX: Double, posicionY: Double) = ejes.actualizar(posicionX, posicionY)
     // Actualizar la posición de los ejes según la posición actual
 
-    fun ocultar() {
+    override fun ocultar() {
         // Ocultar la predicción de la trayectoria, ejes y ángulo
         recorrido.ocultar()
         ejes.ocultar()

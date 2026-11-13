@@ -11,7 +11,7 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-internal class VisualizadorAngulo(contenedor: Pane) {
+internal class VisualizadorAngulo(contenedor: Pane) : IVisualizadorAngulo {
     // Arco y etiqueta para representar el ángulo de lanzamiento
     private val arco = Arc()
     private val etiqueta = Text("Ω")
@@ -36,7 +36,7 @@ internal class VisualizadorAngulo(contenedor: Pane) {
         contenedor.children.addAll(arco, etiqueta)
     }
 
-    fun mostrar(origenX: Double, origenY: Double, velocidadX: Double, velocidadY: Double) {
+    override fun mostrar(origenX: Double, origenY: Double, velocidadX: Double, velocidadY: Double) {
         // Calcular y mostrar el ángulo de lanzamiento según la velocidad inicial
         val grados = Math.toDegrees(atan2(-velocidadY, velocidadX))
         arco.centerX = origenX
@@ -53,7 +53,7 @@ internal class VisualizadorAngulo(contenedor: Pane) {
         etiqueta.isVisible = arco.isVisible
     }
 
-    fun ocultar() {
+    override fun ocultar() {
         // Ocultar el arco y la etiqueta del ángulo de lanzamiento
         arco.isVisible = false
         etiqueta.isVisible = false
