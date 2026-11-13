@@ -3,20 +3,20 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación II (RepoSense + análisis de calidad POO/SOLID). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-11-06.
+> Generado: 2026-11-13.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
-| Índice de calidad POO/SOLID | **44/100** |
+| Índice de calidad POO/SOLID | **56/100** |
 | Código (LOC) | 1,417 |
 | Archivos de código | 21 |
-| Clases (bien usadas) | 20 (4 OK) |
+| Clases (bien usadas) | 20 (5 OK) |
 | Código dentro de clases (%POO) | 96% |
-| Funciones fuera de clases | 1 |
+| Funciones fuera de clases | 0 |
 | Duplicación lógica | 0.0% |
-| Señales S/O/L/I/D | 4/0/2/0/4 |
+| Señales S/O/L/I/D | 1/0/0/0/4 |
 
 > Este informe **describe** lo que el análisis midió con los criterios ya establecidos de la materia. No es una nota.
 
@@ -35,8 +35,8 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 85% | 96% | sí |
 | Duplicación lógica | ≤ 10% | 0.0% | sí |
-| Funciones fuera de clases | ≤ 1 | 1 | sí |
-| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM), Override vacío / 'no implementado' (LSP) | no |
+| Funciones fuera de clases | ≤ 1 | 0 | sí |
+| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM) | no |
 
 **Criterios para destacar**
 
@@ -44,9 +44,9 @@ Criterios de `CRITERIOS-CALIDAD.md`. **Aprobar** se juega con el perfil `estanda
 |---|---|---|---|
 | Código dentro de clases (%POO) | ≥ 95% | 96% | sí |
 | Duplicación lógica | ≤ 5% | 0.0% | sí |
-| Funciones fuera de clases | ≤ 1 | 1 | sí |
-| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM), Complejidad alta, Override vacío / 'no implementado' (LSP) | no |
-| Índice de calidad POO/SOLID | ≥ 60 | 44/100 | no |
+| Funciones fuera de clases | ≤ 1 | 0 | sí |
+| Señales POO/SOLID críticas | ninguna | Baja cohesión (LCOM) | no |
+| Índice de calidad POO/SOLID | ≥ 60 | 56/100 | no |
 
 ### Cómo se calcula el %POO (y por qué no sube solo)
 
@@ -73,12 +73,11 @@ Reúne lo que el análisis marcó y lo que todavía falta para cada semáforo. C
 
 | Falla | Tu resultado | Requisito | Archivos |
 |---|---|---|---|
-| Señales POO/SOLID críticas | Baja cohesión (LCOM), Override vacío / 'no implementado' (LSP) | Aprobar: ninguna<br>Destacar: ninguna | `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`, `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`, `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorRecorrido.kt` |
-| Índice de calidad POO/SOLID | 44/100 | Destacar: ≥ 60 | — |
-| Métodos/funciones largos o con muchos parámetros | **2** método(s)/función(es) largos o con muchos parámetros | Sin señales | `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`, `app/src/main/kotlin/org/example/visuales/Pantalla.kt` |
+| Señales POO/SOLID críticas | Baja cohesión (LCOM) | Aprobar: ninguna<br>Destacar: ninguna | `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt` |
+| Índice de calidad POO/SOLID | 56/100 | Destacar: ≥ 60 | — |
+| Métodos/funciones largos o con muchos parámetros | **3** método(s)/función(es) largos o con muchos parámetros | Sin señales | `app/src/main/kotlin/org/example/visuales/Pantalla.kt`, `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorRecorrido.kt`, `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorTrayectoria.kt` |
 | Dependencia de concretos y falta de abstracciones (DIP) | **4** dependencia(s) de concretos sin abstracciones | Sin señales | `app/src/main/kotlin/org/example/visuales/Pantalla.kt`, `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`, `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorTrayectoria.kt`, `app/src/test/kotlin/org/example/AppTest.kt` |
-| Clase sin métodos (solo datos) | **2** clase(s) sin métodos (solo datos) | Sin señales | `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt` |
-| Campos públicos (encapsulación) | **8** clase(s) con campos públicos | Sin señales | `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`, `app/src/main/kotlin/org/example/fisicas/Proyectil.kt`, `app/src/main/kotlin/org/example/fisicas/SimulacionTrayectoria.kt`, `app/src/main/kotlin/org/example/visuales/Inicio.kt`, `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`, `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorAngulo.kt` (+1 más) |
+| Campos públicos (encapsulación) | **7** clase(s) con campos públicos | Sin señales | `app/src/main/kotlin/org/example/fisicas/CalculadoraTrayectoria.kt`, `app/src/main/kotlin/org/example/fisicas/Proyectil.kt`, `app/src/main/kotlin/org/example/fisicas/SimulacionTrayectoria.kt`, `app/src/main/kotlin/org/example/visuales/Inicio.kt`, `app/src/main/kotlin/org/example/visuales/VistaSimulacion.kt`, `app/src/main/kotlin/org/example/visuales/trayectoria/VisualizadorAngulo.kt` (+1 más) |
 
 ## 4. Aspectos evaluados
 
@@ -88,7 +87,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Un resumen numérico (0-100) que combina la riqueza de clases bien usadas con la penalización por señales POO/SOLID y duplicación, y luego aplica topes duros.
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
-- **Tu resultado:** índice **44/100**
+- **Tu resultado:** índice **56/100**
 
 ### 2. Duplicación lógica (DRY) (duplicacion) — sin señales
 
@@ -107,7 +106,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Funciones de nivel de módulo que no pertenecen a ninguna clase (en esta materia el comportamiento debe ser método de una clase).
 - **Por qué importa:** Son la forma más directa de código procedural en un proyecto que debería ser orientado a objetos.
-- **Tu resultado:** **1** función(es) fuera de clases
+- **Tu resultado:** **0** función(es) fuera de clases
 
 ### 5. Clase demasiado grande (SRP) (god) — sin señales
 
@@ -125,21 +124,17 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
     - ¿Cambian por motivos distintos según la tarea?
     - ¿Se pensó su responsabilidad antes de escribirla, o se fue agregando?
 
-### 7. Complejidad alta (complejidad) — con señales
+### 7. Complejidad alta (complejidad) — sin señales
 
 - **Qué mide:** Complejidad ciclomática: cantidad de caminos posibles dentro de un método o función (condicionales, bucles, casos).
 - **Por qué importa:** Muchos caminos = difícil de seguir y de probar; suelen esconderse casos sin cubrir.
-- **Tu resultado:** **1** método(s)/función(es) con complejidad alta
-- **Para investigar la causa:**
-    - ¿Se agregaron condiciones a medida que aparecían casos nuevos?
-    - ¿Se probaron todos los caminos o solo el caso principal?
-    - ¿Hay reglas de negocio mezcladas con detalles técnicos?
+- **Tu resultado:** **0** método(s)/función(es) con complejidad alta
 
 ### 8. Métodos/funciones largos o con muchos parámetros (tamano) — con señales
 
 - **Qué mide:** Tamaño de los métodos/funciones y cantidad de parámetros.
 - **Por qué importa:** Una función que hace varias cosas cuesta leerla, nombrarla y reutilizarla.
-- **Tu resultado:** **2** método(s)/función(es) largos o con muchos parámetros
+- **Tu resultado:** **3** método(s)/función(es) largos o con muchos parámetros
 - **Para investigar la causa:**
     - ¿La función creció por acumulación de pasos?
     - ¿Agrupa operaciones que podrían describirse por separado?
@@ -169,15 +164,11 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Obliga a implementar operaciones que no se usan y acopla a los clientes a métodos que no necesitan.
 - **Tu resultado:** **0** interfaz(es) con demasiados métodos
 
-### 13. Override vacío o 'no implementado' (LSP) (lsp) — con señales
+### 13. Override vacío o 'no implementado' (LSP) (lsp) — sin señales
 
 - **Qué mide:** Métodos sobrescritos que quedan vacíos o lanzan 'no implementado'.
 - **Por qué importa:** Suele indicar que la jerarquía no representa bien el problema y rompe la sustitución entre clases.
-- **Tu resultado:** **2** override(s) vacío(s) o 'no implementado'
-- **Para investigar la causa:**
-    - ¿Por qué ese método no tiene comportamiento en esa clase?
-    - ¿La clase hereda algo que en realidad no le corresponde?
-    - ¿Qué contrato se esperaba cumplir al heredar?
+- **Tu resultado:** **0** override(s) vacío(s) o 'no implementado'
 
 ### 14. Dependencia de concretos y falta de abstracciones (DIP) (dip) — con señales
 
@@ -189,21 +180,17 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
     - ¿Hay puntos de variación que convendría expresar como abstracción?
     - ¿Cómo se probaría esa clase cambiando una implementación?
 
-### 15. Clase sin métodos (solo datos) (data) — con señales
+### 15. Clase sin métodos (solo datos) (data) — sin señales
 
 - **Qué mide:** Clases que solo acumulan campos y no tienen comportamiento.
 - **Por qué importa:** Separar datos de comportamiento reparte por el proyecto la lógica que debería estar cerca de esos datos.
-- **Tu resultado:** **2** clase(s) sin métodos (solo datos)
-- **Para investigar la causa:**
-    - ¿Dónde vive el comportamiento que opera sobre esos datos?
-    - ¿La clase representa un concepto del dominio o un contenedor técnico?
-    - ¿Se evita la lógica de negocio dentro de la clase por comodidad?
+- **Tu resultado:** **0** clase(s) sin métodos (solo datos)
 
 ### 16. Campos públicos (encapsulación) (encapsulacion) — con señales
 
 - **Qué mide:** Clases que exponen campos sin control de acceso.
 - **Por qué importa:** Expone el estado interno y hace que cualquier cambio dependa de quién lo modifica desde afuera.
-- **Tu resultado:** **8** clase(s) con campos públicos
+- **Tu resultado:** **7** clase(s) con campos públicos
 - **Para investigar la causa:**
     - ¿Se accede al campo desde otras clases para evitar un método?
     - ¿Qué reglas deberían respetarse al modificar ese estado?
@@ -217,14 +204,14 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 ## 5. Evolución por commit
 
-Métricas calculadas sobre el estado de `main` en **cada commit** (22 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
+Métricas calculadas sobre el estado de `main` en **cada commit** (25 commits con trabajo), del primero al último. La calidad usa el perfil `exigente`; el aporte de código lo mide RepoSense. El índice puede **bajar** al crecer el proyecto: se acumulan señales.
 
 ```mermaid
 xychart-beta
     title "Índice POO/SOLID a lo largo de los commits"
-    x-axis ["f7645c2", "62b1a6d", "b1e91df", "0211b91", "56a8f79", "fa3b047", "191ea3c", "e86fc1a", "580c966", "3cc7274", "78ab355", "b488da6", "61b98c8", "30f9976", "77e899d", "61fb4df", "9633dd2", "72b08f9", "fd73c60", "4249243", "bbdf447", "f2ac041"]
+    x-axis ["f7645c2", "62b1a6d", "b1e91df", "0211b91", "56a8f79", "fa3b047", "191ea3c", "e86fc1a", "580c966", "3cc7274", "78ab355", "b488da6", "61b98c8", "30f9976", "77e899d", "61fb4df", "9633dd2", "72b08f9", "fd73c60", "4249243", "bbdf447", "6be8a7e", "71eab34", "33021dd", "0845c5e"]
     y-axis "Índice" 0 --> 100
-    line [0, 0, 0, 38, 21, 21, 15, 14, 12, 10, 10, 9, 8, 10, 10, 10, 10, 10, 10, 9, 9, 7]
+    line [0, 0, 0, 50, 58, 58, 38, 37, 33, 26, 26, 34, 33, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56]
 ```
 
 | # | Fecha | Commit | Autor | LOC | Índice | %POO | Duplic. | Sueltas |
@@ -232,102 +219,28 @@ xychart-beta
 | 1 | 2026-08-14 | `f7645c2` | LauMackinnon | 0 | 0 | 0% | 0.0% | 0 |
 | 2 | 2026-08-14 | `62b1a6d` | mfmasi | 0 | 0 | 0% | 0.0% | 0 |
 | 3 | 2026-08-14 | `b1e91df` | mfmasi | 0 | 0 | 0% | 0.0% | 0 |
-| 4 | 2026-08-14 | `0211b91` | LauMackinnon | 76 | 38 | 26% | 0.0% | 1 |
-| 5 | 2026-08-24 | `56a8f79` | dqmdz-etec | 107 | 21 | 34% | 0.0% | 1 |
-| 6 | 2026-08-24 | `fa3b047` | dqmdz-etec | 107 | 21 | 34% | 0.0% | 1 |
-| 7 | 2026-08-28 | `191ea3c` | mfmasi | 204 | 15 | 69% | 0.0% | 1 |
-| 8 | 2026-09-07 | `e86fc1a` | LauMackinnon | 314 | 14 | 77% | 0.0% | 1 |
-| 9 | 2026-09-28 | `580c966` | mfmasi | 417 | 12 | 84% | 0.0% | 1 |
-| 10 | 2026-10-09 | `3cc7274` | LauMackinnon | 482 | 10 | 87% | 6.2% | 1 |
-| 11 | 2026-10-09 | `78ab355` | mfmasi | 481 | 10 | 87% | 6.2% | 1 |
-| 12 | 2026-10-09 | `b488da6` | LauMackinnon | 690 | 9 | 92% | 3.9% | 1 |
-| 13 | 2026-10-16 | `61b98c8` | mfmasi | 1,032 | 8 | 95% | 2.4% | 1 |
-| 14 | 2026-10-23 | `30f9976` | LauMackinnon | 1,159 | 10 | 96% | 0.0% | 1 |
-| 15 | 2026-10-23 | `77e899d` | mfmasi | 1,195 | 10 | 96% | 0.0% | 1 |
-| 16 | 2026-10-23 | `61fb4df` | mfmasi | 1,272 | 10 | 96% | 0.0% | 1 |
-| 17 | 2026-10-23 | `9633dd2` | mfmasi | 1,285 | 10 | 96% | 0.0% | 1 |
-| 18 | 2026-10-26 | `72b08f9` | mfmasi | 1,315 | 10 | 96% | 0.0% | 1 |
-| 19 | 2026-10-30 | `fd73c60` | LauMackinnon | 1,318 | 10 | 95% | 0.0% | 1 |
-| 20 | 2026-10-30 | `4249243` | mfmasi | 1,417 | 9 | 96% | 0.0% | 1 |
-| 21 | 2026-10-30 | `bbdf447` | mfmasi | 1,417 | 9 | 96% | 0.0% | 1 |
-| 22 | 2026-11-02 | `f2ac041` | mfmasi | 1,496 | 7 | 96% | 0.0% | 1 |
-
-<!-- actividad-clases:inicio -->
-## Actividad en días de clase
-
-> Período evaluado **2026-08-14 → 2026-11-07** · **20 clases** (lunes, viernes) · días de clase del calendario, extendidos hasta la fecha de corte.
->
-> `Commits` = commits de trabajo (no-merge); `Merges` = merges de PR (también son push). Los días sin actividad dicen **sin actividad**. El cuadro principal usa sólo las fechas de clase del calendario oficial.
->
-> **Aportes fuera del calendario:** cada alumno tiene un cuadro aparte con las fechas no lectivas con actividad, desde **2026-08-14** hasta **2026-11-07** (ventana de aportes). Esas fechas no forman parte del cuadro principal, pero se muestran para no perder trabajo hecho en fines de semana, feriados o después del período.
->
-> Se recorre `git log --all` sobre un mirror (todas las ramas y `refs/pull/*`), con deduplicación por commit. Fecha = fecha de autor en UTC-3. Los commits locales no pusheados no se ven. Si el trabajo fue en pareja y el commit es de otra persona, figura a nombre del autor del commit; para reflejarlo, usar `Co-authored-by` o una nota manual.
->
-> Sección informativa: no modifica el semáforo de aprobación.
-
-### LauMackinnon
-
-**13/20 clases con actividad** · 19 commits · 15 merges
-
-| Fecha | Marca | Repositorios | Commits / merges |
-|---|:--:|---|--:|
-| 2026-08-14 | **Sí** | Fisica_Cool | 2 / 2 |
-| 2026-08-21 | **Sí** | Fisica_Cool | 1 / 0 |
-| 2026-08-24 | **Sí** | Fisica_Cool | 1 / 1 |
-| 2026-08-28 | **Sí** | Fisica_Cool | 1 / 2 |
-| 2026-08-31 | **Sí** | Fisica_Cool | 1 / 0 |
-| 2026-09-04 | **Sí** | Fisica_Cool | 4 / 2 |
-| 2026-09-07 | **Sí** | Fisica_Cool | 2 / 1 |
-| 2026-09-14 | No | sin actividad | 0 / 0 |
-| 2026-09-25 | No | sin actividad | 0 / 0 |
-| 2026-09-28 | No | sin actividad | 0 / 0 |
-| 2026-10-02 | **Sí** | Fisica_Cool | 1 / 0 |
-| 2026-10-05 | No | sin actividad | 0 / 0 |
-| 2026-10-09 | **Sí** | Fisica_Cool | 1 / 2 |
-| 2026-10-16 | No | sin actividad | 0 / 0 |
-| 2026-10-19 | **Sí** | Fisica_Cool | 1 / 0 |
-| 2026-10-23 | **Sí** | Fisica_Cool | 1 / 3 |
-| 2026-10-26 | **Sí** | Fisica_Cool | 2 / 1 |
-| 2026-10-30 | **Sí** | Fisica_Cool | 1 / 1 |
-| 2026-11-02 | No | sin actividad | 0 / 0 |
-| 2026-11-06 | No | sin actividad | 0 / 0 |
-
-#### Aportes fuera del calendario de clases — LauMackinnon
-
-_Sin aportes fuera del calendario de clases para LauMackinnon._
-
-### mfmasi
-
-**10/20 clases con actividad** · 14 commits · 18 merges
-
-| Fecha | Marca | Repositorios | Commits / merges |
-|---|:--:|---|--:|
-| 2026-08-14 | **Sí** | Fisica_Cool | 2 / 2 |
-| 2026-08-21 | No | sin actividad | 0 / 0 |
-| 2026-08-24 | **Sí** | Fisica_Cool | 1 / 0 |
-| 2026-08-28 | **Sí** | Fisica_Cool | 1 / 1 |
-| 2026-08-31 | No | sin actividad | 0 / 0 |
-| 2026-09-04 | No | sin actividad | 0 / 0 |
-| 2026-09-07 | No | sin actividad | 0 / 0 |
-| 2026-09-14 | No | sin actividad | 0 / 0 |
-| 2026-09-25 | No | sin actividad | 0 / 0 |
-| 2026-09-28 | **Sí** | Fisica_Cool | 1 / 1 |
-| 2026-10-02 | No | sin actividad | 0 / 0 |
-| 2026-10-05 | No | sin actividad | 0 / 0 |
-| 2026-10-09 | **Sí** | Fisica_Cool | 1 / 3 |
-| 2026-10-16 | **Sí** | Fisica_Cool | 1 / 1 |
-| 2026-10-19 | No | sin actividad | 0 / 0 |
-| 2026-10-23 | **Sí** | Fisica_Cool | 3 / 5 |
-| 2026-10-26 | **Sí** | Fisica_Cool | 1 / 1 |
-| 2026-10-30 | **Sí** | Fisica_Cool | 2 / 2 |
-| 2026-11-02 | **Sí** | Fisica_Cool | 1 / 2 |
-| 2026-11-06 | No | sin actividad | 0 / 0 |
-
-#### Aportes fuera del calendario de clases — mfmasi
-
-_Sin aportes fuera del calendario de clases para mfmasi._
-
-<!-- actividad-clases:fin -->
+| 4 | 2026-08-14 | `0211b91` | LauMackinnon | 76 | 50 | 26% | 0.0% | 0 |
+| 5 | 2026-08-24 | `56a8f79` | dqmdz-etec | 107 | 58 | 34% | 0.0% | 0 |
+| 6 | 2026-08-24 | `fa3b047` | dqmdz-etec | 107 | 58 | 34% | 0.0% | 0 |
+| 7 | 2026-08-28 | `191ea3c` | mfmasi | 204 | 38 | 69% | 0.0% | 0 |
+| 8 | 2026-09-07 | `e86fc1a` | LauMackinnon | 314 | 37 | 77% | 0.0% | 0 |
+| 9 | 2026-09-28 | `580c966` | mfmasi | 417 | 33 | 84% | 0.0% | 0 |
+| 10 | 2026-10-09 | `3cc7274` | LauMackinnon | 482 | 26 | 87% | 6.2% | 0 |
+| 11 | 2026-10-09 | `78ab355` | mfmasi | 481 | 26 | 87% | 6.2% | 0 |
+| 12 | 2026-10-09 | `b488da6` | LauMackinnon | 690 | 34 | 91% | 3.9% | 0 |
+| 13 | 2026-10-16 | `61b98c8` | mfmasi | 1,032 | 33 | 94% | 2.4% | 0 |
+| 14 | 2026-10-23 | `30f9976` | LauMackinnon | 1,159 | 56 | 95% | 0.0% | 0 |
+| 15 | 2026-10-23 | `77e899d` | mfmasi | 1,195 | 56 | 95% | 0.0% | 0 |
+| 16 | 2026-10-23 | `61fb4df` | mfmasi | 1,272 | 56 | 95% | 0.0% | 0 |
+| 17 | 2026-10-23 | `9633dd2` | mfmasi | 1,285 | 56 | 95% | 0.0% | 0 |
+| 18 | 2026-10-26 | `72b08f9` | mfmasi | 1,315 | 56 | 95% | 0.0% | 0 |
+| 19 | 2026-10-30 | `fd73c60` | LauMackinnon | 1,318 | 56 | 95% | 0.0% | 0 |
+| 20 | 2026-10-30 | `4249243` | mfmasi | 1,417 | 56 | 96% | 0.0% | 0 |
+| 21 | 2026-10-30 | `bbdf447` | mfmasi | 1,417 | 56 | 96% | 0.0% | 0 |
+| 22 | 2026-11-07 | `6be8a7e` | dqmdz-etec | 1,417 | 56 | 96% | 0.0% | 0 |
+| 23 | 2026-11-07 | `71eab34` | dqmdz-etec | 1,417 | 56 | 96% | 0.0% | 0 |
+| 24 | 2026-11-07 | `33021dd` | dqmdz-etec | 1,417 | 56 | 96% | 0.0% | 0 |
+| 25 | 2026-11-07 | `0845c5e` | dqmdz-etec | 1,417 | 56 | 96% | 0.0% | 0 |
 
 ---
 _Informe generado por la cátedra. Los criterios y umbrales de medición corresponden al perfil `exigente` de `calidad.py`; el semáforo de aprobación, a `CRITERIOS-CALIDAD.md` (ver `README.md`). Ante dudas, revisá el archivo señalado._
