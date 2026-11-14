@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 
-class Inicio {
+class Inicio : IVistaInicio {
 
     init {
         // Carga las fuentes desde la carpeta resources/fonts/
@@ -28,9 +28,9 @@ class Inicio {
         }
     }
 
-    fun crearVista(
-        onIniciarClick: () -> Unit = {},
-        onCreditosClick: () -> Unit = {}
+    override fun crearVista(
+        onIniciarClick: () -> Unit,
+        onCreditosClick: () -> Unit
     ): VBox {
         val titulo = Label("SIMULADOR MRUV").apply {
             textFill = Color.WHITE

@@ -10,14 +10,16 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import org.example.fisicas.CalculadoraTrayectoria
 import org.example.fisicas.EstadoTrayectoria
+import org.example.fisicas.IProyectil
+import org.example.fisicas.ISimulacionTrayectoria
 import org.example.fisicas.Proyectil
 import org.example.fisicas.SimulacionTrayectoria
 
 class SimulacionTrayectoriaTest {
     @Test
     fun disparoAlcanzableCompletaEnElObjetivo() {
-        val proyectil = Proyectil()
-        val simulacion = SimulacionTrayectoria(
+        val proyectil: IProyectil = Proyectil()
+        val simulacion: ISimulacionTrayectoria = SimulacionTrayectoria(
             calculadora = CalculadoraTrayectoria(),
             pixelesPorMetro = 100.0,
             gravedad = 9.81,
@@ -37,8 +39,8 @@ class SimulacionTrayectoriaTest {
 
     @Test
     fun objetivoFueraDeAlcanceNoActivaElProyectil() {
-        val proyectil = Proyectil()
-        val simulacion = SimulacionTrayectoria(
+        val proyectil: IProyectil = Proyectil()
+        val simulacion: ISimulacionTrayectoria = SimulacionTrayectoria(
             calculadora = CalculadoraTrayectoria(),
             pixelesPorMetro = 100.0,
             gravedad = 9.81,

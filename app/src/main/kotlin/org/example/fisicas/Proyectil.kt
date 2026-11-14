@@ -13,16 +13,16 @@ class Proyectil(
     velocidadX: Double = 0.0,
     velocidadY: Double = 0.0,
     activo: Boolean = true
-) {
-    var posicionX: Double = posicionX
+) : IProyectil {
+    override var posicionX: Double = posicionX
         private set
-    var posicionY: Double = posicionY
+    override var posicionY: Double = posicionY
         private set
     var velocidadX: Double = velocidadX
         private set
     var velocidadY: Double = velocidadY
         private set
-    var activo: Boolean = activo
+    override var activo: Boolean = activo
         private set
 
 
@@ -37,7 +37,7 @@ class Proyectil(
     * @param gravedad Aceleración firmada en unidades de posición/s². En esta
     * convención, un valor negativo produce aceleración hacia +Y.
      */
-    fun actualizar(dt: Double, gravedad: Double): Unit {
+    override fun actualizar(dt: Double, gravedad: Double): Unit {
         //si el proyectil no esta activo, no hace nada
         if (!activo) return
 
@@ -50,25 +50,25 @@ class Proyectil(
     }
 
     //desactivar pone activo en false. No borra la posición ni las velocidades; simplemente hace que actualizar deje de moverlo.
-    fun desactivar(): Unit {
+    override fun desactivar(): Unit {
         activo = false
     }
 
     //colocarEn cambia su posición a unas coordenadas concretas.
-    fun colocarEn(x: Double, y: Double) {
+    override fun colocarEn(x: Double, y: Double) {
         posicionX = x
         posicionY = y
     }
 
     //lanzar establece sus velocidades y lo activa.
-    fun lanzar(velocidadX: Double, velocidadY: Double) {
+    override fun lanzar(velocidadX: Double, velocidadY: Double) {
         this.velocidadX = velocidadX
         this.velocidadY = velocidadY
         activo = true
     }
 
     //reiniciar lo coloca donde indiques, pone ambas velocidades en cero y lo activa.
-    fun reiniciar(x: Double, y: Double) {
+    override fun reiniciar(x: Double, y: Double) {
         colocarEn(x, y)
         velocidadX = 0.0
         velocidadY = 0.0
