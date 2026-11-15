@@ -7,11 +7,14 @@ import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 
-class Inicio : IVistaInicio {
+/**
+ * Pantalla de inicio del simulador.
+ *
+ * Responsabilidad unica: construir el menu principal.
+ */
+class Inicio {
 
     init {
-        // Carga las fuentes desde la carpeta resources/fonts/
-        // El primer parámetro es la ruta relativa desde la carpeta resources
         val horizonFont = javaClass.getResourceAsStream("/fonts/Horizon.otf")
         val montserratFont = javaClass.getResourceAsStream("/fonts/Montserrat.ttf")
 
@@ -28,48 +31,32 @@ class Inicio : IVistaInicio {
         }
     }
 
-    override fun crearVista(
+    fun crearVista(
         onIniciarClick: () -> Unit,
         onCreditosClick: () -> Unit
     ): VBox {
         val titulo = Label("SIMULADOR MRUV").apply {
             textFill = Color.WHITE
-            font = Font.font("Horizon", 72.0) 
+            font = Font.font("Horizon", 72.0)
         }
 
         val btnIniciar = crearBoton("INICIAR", onIniciarClick)
         val btnCreditos = crearBoton("CRÉDITOS", onCreditosClick)
 
         val contenedorBotones = VBox(20.0, btnIniciar, btnCreditos).apply {
-            // Configuración del contenedor de botones
             alignment = Pos.CENTER
         }
 
-        val root = VBox(80.0, titulo, contenedorBotones).apply {
-            // Configuración del contenedor principal
+        return VBox(80.0, titulo, contenedorBotones).apply {
             alignment = Pos.CENTER
             style = "-fx-background-color: black;"
         }
-
-        return root
     }
 
     private fun crearBoton(texto: String, accion: () -> Unit): Button {
-        val estiloNormal = """
-            // Estilo CSS para el botón
-            -fx-background-color: transparent;
-            -fx-text-fill: white;
-            -fx-border-color: white;
-            -fx-border-width: 2px;
-            -fx-font-family: 'Montserrat';
-            -fx-font-size: 20px;
-            -fx-font-weight: light;
-            -fx-cursor: hand;
-        """.trimIndent()
-        
+        val estiloNormal = ESTILO_BOTON
         val estiloHover = estiloNormal.replace("transparent", "#505050")
         return Button(texto).apply {
-            // Configuración de las propiedades del botón
             minWidth = ANCHO_BOTON
             prefWidth = ANCHO_BOTON
             maxWidth = ANCHO_BOTON
@@ -85,8 +72,17 @@ class Inicio : IVistaInicio {
     }
 
     private companion object {
-        // Constantes para el tamaño de los botones
         const val ANCHO_BOTON = 350.0
         const val ALTO_BOTON = 55.0
+        const val ESTILO_BOTON = """
+            -fx-background-color: transparent;
+            -fx-text-fill: white;
+            -fx-border-color: white;
+            -fx-border-width: 2px;
+            -fx-font-family: 'Montserrat';
+            -fx-font-size: 20px;
+            -fx-font-weight: light;
+            -fx-cursor: hand;
+        """
     }
 }

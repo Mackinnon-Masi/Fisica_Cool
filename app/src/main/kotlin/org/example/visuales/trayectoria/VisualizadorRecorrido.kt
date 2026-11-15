@@ -1,29 +1,34 @@
 package org.example.visuales.trayectoria
 
+import javafx.geometry.Point2D
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 import javafx.scene.shape.Polyline
+import org.example.fisicas.VelocidadInicial
 import kotlin.math.floor
 
-internal class VisualizadorRecorrido(contenedor: Pane) : IVisualizadorRecorrido {
-    // Trayectoria y punto final
+/**
+ * Dibuja el recorrido predicho y su avance en el tiempo.
+ *
+ * Responsabilidad unica: representar la curva de la trayectoria.
+ */
+internal class VisualizadorRecorrido(contenedor: Pane) {
+
     private val recorrido = Polyline()
     private val pendiente = Polyline()
     private val puntoFinal = Circle()
-    private var puntos = emptyList<Pair<Double, Double>>()
+    private var puntos = emptyList<Point2D>()
     private var tiempoTotal = 0.0
 
     init {
         recorrido.apply {
-            // Configuración de las propiedades del recorrido
             fill = Color.TRANSPARENT
             stroke = Color.WHITE
             strokeWidth = 2.0
             isMouseTransparent = true
         }
         pendiente.apply {
-            // Configuración de las propiedades de la pendiente
             fill = Color.TRANSPARENT
             stroke = Color.WHITE
             strokeWidth = 2.0
@@ -31,45 +36,42 @@ internal class VisualizadorRecorrido(contenedor: Pane) : IVisualizadorRecorrido 
             isMouseTransparent = true
         }
         puntoFinal.apply {
-            // Configuración de las propiedades del punto final
             radius = 3.5
             fill = Color.LIMEGREEN
             stroke = Color.LIMEGREEN
             isMouseTransparent = true
             isVisible = false
         }
-        contenedor.children.addAll(pendiente, recorrido, puntoFinal) 
+        contenedor.children.addAll(pendiente, recorrido, puntoFinal)
     }
 
-    override fun mostrar(
-        // Calcular y mostrar la trayectoria completa y el punto final
-        origenX: Double,
-        origenY: Double,
-        velocidadX: Double,
-        velocidadY: Double,
+    fun mostrar(
+        origen: Point2D,
+        velocidad: VelocidadInicial,
         gravedad: Double,
-        tiempoTotal: Double,
-        objetivoX: Double,
-        objetivoY: Double
+        objetivo: Point2D
     ) {
-        this.tiempoTotal = tiempoTotal
-        puntoFinal.centerX = objetivoX
-        puntoFinal.centerY = objetivoY
+        tiempoTotal = velocidad.tiempoDeVuelo
+        puntoFinal.centerX = objetivo.x
+        puntoFinal.centerY = objetivo.y
         puntoFinal.isVisible = true
         puntos = (0..SEGMENTOS).map { indice ->
-            val tiempo = tiempoTotal * indice / SEGMENTOS
-            if (indice == SEGMENTOS) objetivoX to objetivoY
-            else (origenX + velocidadX * tiempo) to
-                (origenY + velocidadY * tiempo + 0.5 * gravedad * tiempo * tiempo)
-        // Calcular los puntos de la trayectoria y almacenarlos en la lista de puntos
+            if (indice == SEGMENTOS) {
+                objetivo
+            } else {
+                val tiempo = tiempoTotal * indice / SEGMENTOS
+                Point2D(
+                    origen.x + velocidad.velocidadX * tiempo,
+                    origen.y + velocidad.velocidadY * tiempo + 0.5 * gravedad * tiempo * tiempo
+                )
+            }
         }
         pendiente.isVisible = true
         recorrido.isVisible = true
         actualizar(0.0)
     }
 
-    override fun actualizar(tiempo: Double) {
-        // Actualizar la visualización de la trayectoria y la pendiente según el tiempo transcurrido
+    fun actualizar(tiempo: Double) {
         if (puntos.size < 2 || tiempoTotal <= 0.0) return
 
         val posicion = (tiempo / tiempoTotal).coerceIn(0.0, 1.0) * (puntos.size - 1)
@@ -79,7 +81,9 @@ internal class VisualizadorRecorrido(contenedor: Pane) : IVisualizadorRecorrido 
         val puntoActual = if (fraccion > 0.0 && indice < puntos.lastIndex) {
             interpolar(puntos[indice], puntos[indice + 1], fraccion)
                 .also { recorridoActual.add(it) }
-        } else puntos[indice]
+        } else {
+            puntos[indice]
+        }
         val puntosPendientes = buildList {
             add(puntoActual)
             addAll(puntos.drop(indice + 1))
@@ -90,30 +94,22 @@ internal class VisualizadorRecorrido(contenedor: Pane) : IVisualizadorRecorrido 
         pendiente.isVisible = puntosPendientes.size > 1
     }
 
-    override fun ocultar() {
-        // Ocultar la visualización de la trayectoria y el punto final
+    fun ocultar() {
         puntos = emptyList()
         recorrido.isVisible = false
         pendiente.isVisible = false
         puntoFinal.isVisible = false
     }
 
-    private fun interpolar(
-        // Interpolación lineal entre dos puntos según una fracción
-        inicio: Pair<Double, Double>,
-        fin: Pair<Double, Double>,
-        fraccion: Double
-    ): Pair<Double, Double> =
-    // Calcular las coordenadas interpoladas entre dos puntos según una fracción
-        (inicio.first + (fin.first - inicio.first) * fraccion) to
-            (inicio.second + (fin.second - inicio.second) * fraccion)
+    private fun interpolar(inicio: Point2D, fin: Point2D, fraccion: Double): Point2D = Point2D(
+        inicio.x + (fin.x - inicio.x) * fraccion,
+        inicio.y + (fin.y - inicio.y) * fraccion
+    )
 
-    private fun coordenadas(puntos: List<Pair<Double, Double>>): List<Double> =
-    // Convertir la lista de puntos en una lista de coordenadas para el Polyline
-        puntos.flatMap { listOf(it.first, it.second) }
+    private fun coordenadas(puntos: List<Point2D>): List<Double> =
+        puntos.flatMap { listOf(it.x, it.y) }
 
     private companion object {
-        // Constante para el número de segmentos en la trayectoria
         const val SEGMENTOS = 120
     }
 }

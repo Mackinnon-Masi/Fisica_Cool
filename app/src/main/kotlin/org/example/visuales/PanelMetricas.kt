@@ -9,8 +9,12 @@ import javafx.scene.paint.Color
 import org.example.fisicas.VelocidadInicial
 import kotlin.math.atan2
 
-/** Panel que muestra las metricas X, Y, altura maxima y angulo. */
-class PanelMetricas : IPanelMetricas {
+/**
+ * Panel de metricas de la partida: posicion, altura maxima y angulo.
+ *
+ * Responsabilidad unica: presentar las magnitudes del disparo.
+ */
+class PanelMetricas {
 
     private val valorX = Label("-- m")
     private val valorY = Label("-- m")
@@ -21,7 +25,7 @@ class PanelMetricas : IPanelMetricas {
     private var alturaMaxima: Double? = null
     private var anguloLanzamiento: Double? = null
 
-    override val nodo: HBox
+    val nodo: HBox
 
     init {
         fun metrica(titulo: String, valor: Label, color: Color): VBox = VBox(
@@ -42,7 +46,7 @@ class PanelMetricas : IPanelMetricas {
         }
     }
 
-    override fun preparar(origenY: Double) {
+    fun preparar(origenY: Double) {
         this.origenY = origenY
         alturaMaxima = null
         anguloLanzamiento = null
@@ -50,7 +54,7 @@ class PanelMetricas : IPanelMetricas {
         valorAngulo.text = "--°"
     }
 
-    override fun registrarLanzamiento(velocidad: VelocidadInicial) {
+    fun registrarLanzamiento(velocidad: VelocidadInicial) {
         anguloLanzamiento = Math.toDegrees(
             atan2(-velocidad.velocidadY, velocidad.velocidadX)
         )
@@ -63,7 +67,7 @@ class PanelMetricas : IPanelMetricas {
         actualizarDerivadas()
     }
 
-    override fun actualizar(posicionX: Double, posicionY: Double) {
+    fun actualizar(posicionX: Double, posicionY: Double) {
         valorX.text = "%.2f m".format(posicionX / PIXELES_POR_METRO)
         valorY.text = "%.2f m".format((origenY - posicionY) / PIXELES_POR_METRO)
         actualizarDerivadas()

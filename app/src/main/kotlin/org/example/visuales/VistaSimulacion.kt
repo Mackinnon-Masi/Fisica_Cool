@@ -6,27 +6,27 @@ import javafx.scene.control.Button
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
-import org.example.fisicas.IProyectilSimulacion
+import org.example.fisicas.SimulacionTrayectoria
 import org.example.fisicas.VelocidadInicial
 import org.example.trackeo.MouseTracker
 
 /**
- * Fachada de la vista de simulacion. Delega cada responsabilidad en
- * un componente cohesionado (controles, metricas, ayuda, entrada y
- * capa del proyectil).
+ * Vista de la simulacion.
+ *
+ * Responsabilidad unica: componer el layout de la partida y traducir las
+ * acciones del usuario a operaciones sobre la simulacion.
  */
 class VistaSimulacion(
-    private val simulacion: IProyectilSimulacion,
+    private val simulacion: SimulacionTrayectoria,
     onVolverClick: () -> Unit
-) : IVistaSimulacion {
+) {
+    private val capa = CapaProyectil(simulacion.proyectil)
+    private val metricas = PanelMetricas()
+    private val controles = PanelControles()
+    private val ayuda = PanelAyuda()
+    private val mouse = MouseTracker()
 
-    private val capa: ICapaProyectil = CapaProyectil(simulacion.proyectil)
-    private val metricas: IPanelMetricas = PanelMetricas()
-    private val controles: IPanelControles = PanelControles()
-    private val ayuda: IPanelAyuda = PanelAyuda()
-    private val entrada: IEntradaVista
-
-    override val raiz: StackPane
+    val raiz: StackPane
 
     init {
         val botonInfo = Button("ⓘ").apply {
@@ -50,77 +50,73 @@ class VistaSimulacion(
             padding = Insets(20.0, 0.0, 0.0, 30.0)
         }
         raiz = StackPane(contenido, ayuda.nodo)
-        entrada = EntradaVista(capa.nodo, raiz, MouseTracker())
+        mouse.attachTo(raiz)
     }
 
-    override fun objetivoActual(): Point2D = entrada.objetivoActual()
+    fun objetivoActual(): Point2D = capa.nodo.sceneToLocal(mouse.lastX, mouse.lastY)
 
-    override fun rapidezIngresada(): Double? = controles.rapidezIngresada()
+    fun rapidezIngresada(): Double? = controles.rapidezIngresada()
 
-    override fun posicionInicialY(): Double = entrada.posicionInicialY()
+    fun posicionInicialY(): Double = (capa.nodo.height - 20.0).coerceAtLeast(20.0)
 
-    override fun prepararPartida(origenY: Double) {
+    fun prepararPartida(origenY: Double) {
         simulacion.reiniciar(origenY)
         metricas.preparar(origenY)
         controles.reiniciar()
         ayuda.cerrar()
-        entrada.mostrarEtiqueta(true)
+        mouse.mostrarEtiqueta(true)
         capa.ocultar()
         sincronizarProyectil()
     }
 
-    override fun abrirAyuda() {
+    fun abrirAyuda() {
         ayuda.abrir()
     }
 
-    override fun sincronizarProyectil() {
+    fun sincronizarProyectil() {
         capa.sincronizar()
         metricas.actualizar(simulacion.proyectil.posicionX, simulacion.proyectil.posicionY)
     }
 
-    override fun registrarLanzamiento(velocidad: VelocidadInicial) {
+    fun registrarLanzamiento(velocidad: VelocidadInicial) {
         metricas.registrarLanzamiento(velocidad)
     }
 
-    override fun configurarEdicion(activa: Boolean) {
+    fun configurarEdicion(activa: Boolean) {
         controles.habilitarEdicion(activa)
-        entrada.mostrarEtiqueta(!activa)
+        mouse.mostrarEtiqueta(!activa)
         if (activa) capa.ocultar()
     }
 
-    override fun actualizarIndicadorTrayectoria(esAlta: Boolean) {
+    fun actualizarIndicadorTrayectoria(esAlta: Boolean) {
         controles.mostrarIndicadorTrayectoria(esAlta)
     }
 
-    override fun mostrarErrorDeDisparo() {
+    fun mostrarErrorDeDisparo() {
         controles.mostrarError("Rapidez inválida o el objetivo está fuera del alcance.")
     }
 
-    override fun limpiarErrorDeDisparo() {
+    fun limpiarErrorDeDisparo() {
         controles.mostrarError(null)
     }
 
-    override fun mostrarTrayectoria(
-        velocidad: VelocidadInicial,
-        objetivoX: Double,
-        objetivoY: Double
-    ) {
-        capa.mostrarTrayectoria(velocidad, objetivoX, objetivoY)
+    fun mostrarTrayectoria(velocidad: VelocidadInicial, objetivo: Point2D) {
+        capa.mostrarTrayectoria(velocidad, objetivo)
     }
 
-    override fun mostrarEjes() {
+    fun mostrarEjes() {
         capa.mostrarEjes()
     }
 
-    override fun actualizarTrayectoria(tiempoTranscurrido: Double) {
+    fun actualizarTrayectoria(tiempoTranscurrido: Double) {
         capa.actualizarTrayectoria(tiempoTranscurrido)
         metricas.actualizar(simulacion.proyectil.posicionX, simulacion.proyectil.posicionY)
     }
 
-    override fun ocultarTrayectoria() {
+    fun ocultarTrayectoria() {
         capa.ocultar()
     }
 
-    override fun estaFueraDeVista(anchoEscena: Double, altoEscena: Double): Boolean =
+    fun estaFueraDeVista(anchoEscena: Double, altoEscena: Double): Boolean =
         capa.estaFueraDeVista(anchoEscena, altoEscena)
 }

@@ -9,50 +9,58 @@ import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.stage.Stage
 import org.example.fisicas.CalculadoraTrayectoria
-import org.example.fisicas.ISimulacionTrayectoria
 import org.example.fisicas.Proyectil
 import org.example.fisicas.SimulacionTrayectoria
-import org.example.trackeo.ILectorTeclado
 import org.example.trackeo.KeyboardReader
 
-private const val PIXELES_POR_METRO = 100.0
-private const val GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO = 9.81
-
+/**
+ * Punto de composicion de la aplicacion.
+ *
+ * Responsabilidad unica: armar la simulacion, la vista, el controlador y la
+ * ventana principal.
+ */
 class Pantalla : Application() {
-    // Inicia la aplicación JavaFX y configura la ventana principal de la simulación
+    private lateinit var escena: Scene
+    private lateinit var rootInicio: Pane
+    private lateinit var vistaSimulacion: VistaSimulacion
+    private lateinit var controlador: ControladorTrayectoria
+    private var posicionDisparoY = POSICION_DISPARO_Y
+
     override fun start(stage: Stage) {
-        // Configura la escena principal de la aplicación y los elementos de la simulación
-        lateinit var rootInicio: Pane
-        lateinit var escena: Scene
-        var posicionDisparoY = 620.0
+        val simulacion = crearSimulacion()
+        vistaSimulacion = crearVistaSimulacion(simulacion)
+        escena = Scene(vistaSimulacion.raiz, ANCHO_ESCENA, ALTO_ESCENA, Color.BLACK)
+        controlador = crearControlador(simulacion)
+        bloquearActivacionBotones()
+        rootInicio = crearInicio()
 
-        fun mostrarVista(root: Pane) {
-            // Cambia la vista actual de la escena a la raíz proporcionada y actualiza el diseño
-            escena.root = root
-            root.applyCss()
-            root.layout()
-        }
+        stage.title = TITULO
+        mostrarVista(rootInicio)
+        stage.scene = escena
+        stage.show()
+        controlador.iniciar()
+    }
 
-        val simulacion: ISimulacionTrayectoria = SimulacionTrayectoria(
-            // Configura la simulación de la trayectoria del proyectil con los parámetros iniciales
-            calculadora = CalculadoraTrayectoria(),
-            pixelesPorMetro = PIXELES_POR_METRO,
-            gravedad = GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO,
-            proyectil = Proyectil(posicionX = 100.0, posicionY = 620.0)
-        )
-        lateinit var controlador: IControladorTrayectoria
-        val vistaSimulacion: IVistaSimulacion = VistaSimulacion(simulacion) {
-            // Configura la acción al hacer clic en el botón de volver, mostrando la vista de inicio y preparando la partida con la posición de disparo actual
+    private fun crearSimulacion(): SimulacionTrayectoria = SimulacionTrayectoria(
+        calculadora = CalculadoraTrayectoria(),
+        pixelesPorMetro = PIXELES_POR_METRO,
+        gravedad = GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO,
+        proyectil = Proyectil(posicionX = 100.0, posicionY = 620.0)
+    )
+
+    private fun crearVistaSimulacion(simulacion: SimulacionTrayectoria): VistaSimulacion =
+        VistaSimulacion(simulacion) {
             controlador.prepararPartida(posicionDisparoY)
             mostrarVista(rootInicio)
         }
-        escena = Scene(vistaSimulacion.raiz, 1280.0, 720.0, Color.BLACK)
-        val teclado: ILectorTeclado = KeyboardReader().apply { attachTo(escena) }
-        // Configura el controlador de la simulación, que maneja la lógica de la trayectoria del proyectil y la interacción con el teclado y la escena
-        controlador = ControladorTrayectoria(simulacion, vistaSimulacion, teclado, escena)
 
-        val bloquearActivacionBotones = EventHandler<KeyEvent> { evento ->
-            // Bloquea la activación de botones al presionar ESPACIO o ENTER mientras se está en la vista de simulación, evitando que se activen acciones no deseadas
+    private fun crearControlador(simulacion: SimulacionTrayectoria): ControladorTrayectoria {
+        val teclado = KeyboardReader().apply { attachTo(escena) }
+        return ControladorTrayectoria(simulacion, vistaSimulacion, teclado, escena)
+    }
+
+    private fun bloquearActivacionBotones() {
+        val bloqueo = EventHandler<KeyEvent> { evento ->
             if (
                 escena.root === vistaSimulacion.raiz &&
                 (evento.code == KeyCode.SPACE || evento.code == KeyCode.ENTER)
@@ -60,20 +68,14 @@ class Pantalla : Application() {
                 evento.consume()
             }
         }
-        escena.addEventFilter(KeyEvent.KEY_PRESSED, bloquearActivacionBotones)
-        // Agrega un filtro de eventos para bloquear la activación de botones al presionar ESPACIO o ENTER mientras se está en la vista de simulación, evitando que se activen acciones no deseadas
-        escena.addEventFilter(KeyEvent.KEY_RELEASED, bloquearActivacionBotones)
+        escena.addEventFilter(KeyEvent.KEY_PRESSED, bloqueo)
+        escena.addEventFilter(KeyEvent.KEY_RELEASED, bloqueo)
+    }
 
-        val pantallaCreditos: IVistaCreditos = Creditos()
-        val rootCreditos = pantallaCreditos.crearVista {
-            // Configura la acción al hacer clic en el botón de volver desde la vista de créditos, mostrando la vista de inicio
-            mostrarVista(rootInicio)
-        }
-        val pantallaInicio: IVistaInicio = Inicio()
-        rootInicio = pantallaInicio.crearVista(
-            // Configura las acciones al hacer clic en los botones de iniciar y créditos desde la vista de inicio, mostrando la vista de simulación o la vista de créditos según corresponda
+    private fun crearInicio(): Pane {
+        val rootCreditos = Creditos().crearVista { mostrarVista(rootInicio) }
+        return Inicio().crearVista(
             onIniciarClick = {
-                // Muestra la vista de simulación y prepara la partida con la posición de disparo inicial, calculada a partir de la vista de simulación
                 mostrarVista(vistaSimulacion.raiz)
                 posicionDisparoY = vistaSimulacion.posicionInicialY()
                 controlador.prepararPartida(posicionDisparoY)
@@ -81,11 +83,20 @@ class Pantalla : Application() {
             },
             onCreditosClick = { mostrarVista(rootCreditos) }
         )
-        // Configura la ventana principal de la aplicación con el título, la vista inicial y muestra la escena
-        stage.title = "Proyecto Física MRUV re fachero facherito"
-        mostrarVista(rootInicio)
-        stage.scene = escena
-        stage.show()
-        controlador.iniciar()
+    }
+
+    private fun mostrarVista(root: Pane) {
+        escena.root = root
+        root.applyCss()
+        root.layout()
+    }
+
+    private companion object {
+        const val TITULO = "Proyecto Física MRUV re fachero facherito"
+        const val ANCHO_ESCENA = 1280.0
+        const val ALTO_ESCENA = 720.0
+        const val POSICION_DISPARO_Y = 620.0
+        const val PIXELES_POR_METRO = 100.0
+        const val GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO = 9.81
     }
 }
