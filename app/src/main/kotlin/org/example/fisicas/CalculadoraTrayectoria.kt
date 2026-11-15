@@ -8,7 +8,7 @@ import kotlin.math.sqrt
  * Responsabilidad unica: obtener la velocidad inicial y el tiempo de vuelo
  * necesarios para alcanzar un objetivo.
  */
-class CalculadoraTrayectoria : CalculadorTrayectoria {
+class CalculadoraTrayectoria : CalculadorTrayectoria() {
 
     override fun calcular(solicitud: SolicitudTrayectoria): VelocidadInicial? {
         if (!solicitud.esValida()) return null
