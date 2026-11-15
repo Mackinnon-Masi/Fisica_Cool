@@ -9,10 +9,14 @@ import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 
-/** Capa emergente con la ayuda de controles. */
-class PanelAyuda : IPanelAyuda {
+/**
+ * Capa emergente con la ayuda de controles.
+ *
+ * Responsabilidad unica: mostrar y ocultar el panel de ayuda.
+ */
+class PanelAyuda {
 
-    override val nodo = StackPane()
+    val nodo = StackPane()
 
     init {
         val botonCerrar = Button("×").apply {
@@ -56,17 +60,17 @@ class PanelAyuda : IPanelAyuda {
         nodo.isPickOnBounds = false
     }
 
-    override fun abrir() {
+    fun abrir() {
         nodo.isManaged = true
         nodo.isVisible = true
     }
 
-    override fun cerrar() {
+    fun cerrar() {
         nodo.isVisible = false
         nodo.isManaged = false
     }
 
-    override fun alternar() {
+    fun alternar() {
         if (nodo.isVisible) cerrar() else abrir()
     }
 

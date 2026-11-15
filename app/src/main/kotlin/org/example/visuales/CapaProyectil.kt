@@ -1,19 +1,23 @@
 package org.example.visuales
 
+import javafx.geometry.Point2D
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
-import org.example.fisicas.ILecturaProyectil
+import org.example.fisicas.Proyectil
 import org.example.fisicas.VelocidadInicial
-import org.example.visuales.trayectoria.IVisualizadorTrayectoria
-import org.example.visuales.trayectoria.VisualizadorTrayectoria
+import org.example.visuales.trayectoria.VisualizadorAngulo
+import org.example.visuales.trayectoria.VisualizadorEjes
+import org.example.visuales.trayectoria.VisualizadorRecorrido
 
-/** Lienzo donde se dibujan el proyectil y su trayectoria. */
-class CapaProyectil(
-    private val proyectil: ILecturaProyectil
-) : ICapaProyectil {
+/**
+ * Lienzo donde se dibujan el proyectil y su trayectoria.
+ *
+ * Responsabilidad unica: reflejar visualmente el estado de la simulacion.
+ */
+class CapaProyectil(private val proyectil: Proyectil) {
 
-    override val nodo = Pane()
+    val nodo = Pane()
 
     private val bala = Circle(proyectil.posicionX, proyectil.posicionY, 8.0).apply {
         fill = Color.WHITE
@@ -21,49 +25,60 @@ class CapaProyectil(
         strokeWidth = 3.0
     }
 
-    private val visualizador: IVisualizadorTrayectoria = VisualizadorTrayectoria(nodo)
+    private val recorrido = VisualizadorRecorrido(nodo)
+    private val ejes = VisualizadorEjes(nodo)
+    private val angulo = VisualizadorAngulo(nodo)
 
     init {
         nodo.children.add(bala)
         bala.toFront()
     }
 
-    override fun sincronizar() {
+    fun sincronizar() {
         bala.centerX = proyectil.posicionX
         bala.centerY = proyectil.posicionY
     }
 
-    override fun mostrarTrayectoria(
-        velocidad: VelocidadInicial,
-        objetivoX: Double,
-        objetivoY: Double
-    ) {
-        visualizador.mostrarPrediccion(
-            origenX = proyectil.posicionX,
-            origenY = proyectil.posicionY,
+    fun mostrarTrayectoria(velocidad: VelocidadInicial, objetivo: Point2D) {
+        if (!velocidad.tiempoDeVuelo.isFinite() || velocidad.tiempoDeVuelo <= 0.0) {
+            ocultar()
+            return
+        }
+        val origen = posicionActual()
+        val velocidadEnPixeles = VelocidadInicial(
             velocidadX = velocidad.velocidadX * PIXELES_POR_METRO,
             velocidadY = velocidad.velocidadY * PIXELES_POR_METRO,
-            gravedad = GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO * PIXELES_POR_METRO,
-            tiempoDeVuelo = velocidad.tiempoDeVuelo,
-            objetivoX = objetivoX,
-            objetivoY = objetivoY
+            tiempoDeVuelo = velocidad.tiempoDeVuelo
         )
+        recorrido.mostrar(
+            origen,
+            velocidadEnPixeles,
+            GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO * PIXELES_POR_METRO,
+            objetivo
+        )
+        angulo.mostrar(origen, velocidadEnPixeles)
     }
 
-    override fun mostrarEjes() {
-        visualizador.mostrarEjes(proyectil.posicionX, proyectil.posicionY)
+    fun mostrarEjes() {
+        ejes.mostrar(posicionActual())
     }
 
-    override fun actualizarTrayectoria(tiempoTranscurrido: Double) {
-        visualizador.actualizarProgreso(tiempoTranscurrido)
-        visualizador.actualizarEjes(proyectil.posicionX, proyectil.posicionY)
+    fun actualizarTrayectoria(tiempoTranscurrido: Double) {
+        recorrido.actualizar(tiempoTranscurrido)
+        ejes.actualizar(posicionActual())
         sincronizar()
     }
 
-    override fun ocultar() = visualizador.ocultar()
+    fun ocultar() {
+        recorrido.ocultar()
+        ejes.ocultar()
+        angulo.ocultar()
+    }
 
-    override fun estaFueraDeVista(anchoEscena: Double, altoEscena: Double): Boolean =
+    fun estaFueraDeVista(anchoEscena: Double, altoEscena: Double): Boolean =
         proyectil.posicionY > altoEscena || proyectil.posicionX > anchoEscena
+
+    private fun posicionActual(): Point2D = Point2D(proyectil.posicionX, proyectil.posicionY)
 
     private companion object {
         const val PIXELES_POR_METRO = 100.0

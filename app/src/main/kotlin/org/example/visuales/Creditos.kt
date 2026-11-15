@@ -8,10 +8,14 @@ import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 
-class Creditos : IVistaCreditos {
+/**
+ * Pantalla de creditos.
+ *
+ * Responsabilidad unica: construir la vista con los autores del proyecto.
+ */
+class Creditos {
 
     init {
-        // Carga de fuentes personalizadas para los créditos
         val montserratBold = javaClass.getResourceAsStream("/fonts/Montserrat-Bold.ttf")
         val montserratRegular = javaClass.getResourceAsStream("/fonts/Montserrat.ttf")
 
@@ -19,30 +23,23 @@ class Creditos : IVistaCreditos {
         if (montserratRegular != null) Font.loadFont(montserratRegular, 28.0)
     }
 
-    override fun crearVista(onVolverClick: () -> Unit): BorderPane {
-        //botón de volver a la pantalla principal
-        val btnVolver = BotonVolver(onVolverClick)
-
+    fun crearVista(onVolverClick: () -> Unit): BorderPane {
         val bloque1 = crearBloqueProgramador("Malena Masi Fragapane")
         val bloque2 = crearBloqueProgramador("Lautaro Mackinnon")
 
-        // contenedor central del texto
         val contenedorTexto = VBox(60.0, bloque1, bloque2).apply {
             alignment = Pos.CENTER
         }
 
-        val root = BorderPane().apply {
-            top = btnVolver
+        return BorderPane().apply {
+            top = BotonVolver(onVolverClick)
             center = contenedorTexto
             style = "-fx-background-color: black;"
-            padding = Insets(20.0, 0.0, 0.0, 30.0) // Margen para la flecha (Arriba, Derecha, Abajo, Izquierda)
+            padding = Insets(20.0, 0.0, 0.0, 30.0)
         }
-        
-        return root
     }
 
     private fun crearBloqueProgramador(nombre: String): VBox {
-        // Crea un bloque de créditos para un programador con su rol y nombre, aplicando estilos de fuente y color
         val rol = Label("Programador").apply {
             textFill = Color.WHITE
             font = Font.font("Montserrat", javafx.scene.text.FontWeight.BOLD, 48.0)

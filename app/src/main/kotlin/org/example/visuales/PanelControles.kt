@@ -7,8 +7,13 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 
-/** Panel con el campo de rapidez y los mensajes de estado. */
-class PanelControles : IPanelControles {
+/**
+ * Panel de entrada y estado del disparo.
+ *
+ * Responsabilidad unica: capturar la rapidez inicial y mostrar el tipo de
+ * trayectoria y los mensajes de error.
+ */
+class PanelControles {
 
     private val campoRapidez = TextField("12.0").apply {
         promptText = "Rapidez (m/s)"
@@ -25,11 +30,11 @@ class PanelControles : IPanelControles {
 
     private var trayectoriaAlta = false
 
-    override val estadoDisparo = Label().apply {
+    val estadoDisparo = Label().apply {
         textFill = Color.LIGHTCORAL
     }
 
-    override val nodo: VBox = VBox(
+    val nodo: VBox = VBox(
         6.0,
         HBox(
             8.0,
@@ -39,22 +44,22 @@ class PanelControles : IPanelControles {
         estadoTrayectoria
     )
 
-    override fun rapidezIngresada(): Double? = campoRapidez.text.toDoubleOrNull()
+    fun rapidezIngresada(): Double? = campoRapidez.text.toDoubleOrNull()
 
-    override fun habilitarEdicion(activa: Boolean) {
+    fun habilitarEdicion(activa: Boolean) {
         campoRapidez.isDisable = !activa
     }
 
-    override fun mostrarIndicadorTrayectoria(esAlta: Boolean) {
+    fun mostrarIndicadorTrayectoria(esAlta: Boolean) {
         trayectoriaAlta = esAlta
         estadoTrayectoria.text = if (esAlta) "Trayectoria alta" else "Trayectoria baja"
     }
 
-    override fun mostrarError(mensaje: String?) {
+    fun mostrarError(mensaje: String?) {
         estadoDisparo.text = mensaje ?: ""
     }
 
-    override fun reiniciar() {
+    fun reiniciar() {
         estadoDisparo.text = ""
         campoRapidez.isDisable = true
         mostrarIndicadorTrayectoria(trayectoriaAlta)
