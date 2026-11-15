@@ -6,15 +6,15 @@ class SimulacionTrayectoria(
     private val calculadora: CalculadorTrayectoria,
     private val pixelesPorMetro: Double,
     private val gravedad: Double,
-    val proyectil: Proyectil
-) {
+    override val proyectil: IProyectil
+) : ISimulacionTrayectoria {
     // Estado actual de la simulación, que puede ser PREPARADA, EN_VUELO o COMPLETADA
 
-    var estado: EstadoTrayectoria = EstadoTrayectoria.PREPARADA
+    override var estado: EstadoTrayectoria = EstadoTrayectoria.PREPARADA
         private set
-    var trayectoriaAlta: Boolean = false
+    override var trayectoriaAlta: Boolean = false
         private set
-    var tiempoTranscurrido: Double = 0.0
+    override var tiempoTranscurrido: Double = 0.0
         private set
     var tiempoDeVuelo: Double = 0.0
         private set
@@ -26,11 +26,11 @@ class SimulacionTrayectoria(
         reiniciar(origenY)
     }
 
-    fun alternarTrayectoria() {
+    override fun alternarTrayectoria() {
         trayectoriaAlta = !trayectoriaAlta
     }
 
-    fun reiniciar(origenY: Double) {
+    override fun reiniciar(origenY: Double) {
         // Reinicia la simulación estableciendo el origen Y del proyectil, reiniciando su posición y estado, y configurando el tiempo transcurrido y de vuelo a cero
         this.origenY = origenY
         proyectil.reiniciar(ORIGEN_X, origenY)
@@ -40,7 +40,7 @@ class SimulacionTrayectoria(
         estado = EstadoTrayectoria.PREPARADA
     }
 
-    fun calcularVelocidad(objetivoX: Double, objetivoY: Double, rapidez: Double): VelocidadInicial? =
+    override fun calcularVelocidad(objetivoX: Double, objetivoY: Double, rapidez: Double): VelocidadInicial? =
     // Calcula la velocidad inicial necesaria para alcanzar un objetivo dado la rapidez y el tipo de trayectoria (alta o baja). Devuelve null si no es posible calcular la velocidad.
         calculadora.calcular(
             SolicitudTrayectoria(
@@ -55,7 +55,7 @@ class SimulacionTrayectoria(
             )
         )
 
-    fun disparar(
+    override fun disparar(
         // Dispara el proyectil hacia un objetivo dado la rapidez, calculando la velocidad inicial necesaria y actualizando el estado de la simulación. Devuelve null si no es posible calcular la velocidad.
         objetivoX: Double,
         objetivoY: Double,
@@ -79,7 +79,7 @@ class SimulacionTrayectoria(
         return velocidad
     }
 
-    fun avanzar(deltaSegundos: Double) {
+    override fun avanzar(deltaSegundos: Double) {
         // Avanza la simulación del proyectil si el estado es EN_VUELO y el tiempo transcurrido es válido. Actualiza la posición del proyectil y verifica si ha alcanzado el objetivo, en cuyo caso lo coloca en la posición final, lo desactiva y cambia el estado a COMPLETADA.
         if (estado != EstadoTrayectoria.EN_VUELO || !deltaSegundos.isFinite() || deltaSegundos <= 0.0) {
             return
@@ -96,7 +96,7 @@ class SimulacionTrayectoria(
         }
     }
 
-    fun detener() {
+    override fun detener() {
         // Detiene la simulación del proyectil si el estado es EN_VUELO, desactiva el proyectil y cambia el estado a COMPLETADA
         proyectil.desactivar()
         estado = EstadoTrayectoria.COMPLETADA

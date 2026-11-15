@@ -7,7 +7,7 @@ import javafx.scene.text.Font
 import javafx.scene.text.Text
 import kotlin.math.abs
 
-internal class VisualizadorEjes(contenedor: Pane) {
+internal class VisualizadorEjes(contenedor: Pane) : IVisualizadorEjes {
     // Ejes y etiquetas
     private val ejeX = Line()
     private val ejeY = Line()
@@ -26,7 +26,7 @@ internal class VisualizadorEjes(contenedor: Pane) {
         contenedor.children.addAll(ejeX, ejeY, etiquetaX, etiquetaY)
     }
 
-    fun mostrar(origenX: Double, origenY: Double) {
+    override fun mostrar(origenX: Double, origenY: Double) {
         // Establecer el origen y activar la visualización. Hace que inicie en 0
         this.origenX = origenX
         this.origenY = origenY
@@ -34,7 +34,7 @@ internal class VisualizadorEjes(contenedor: Pane) {
         actualizar(origenX, origenY)
     }
 
-    fun actualizar(posicionX: Double, posicionY: Double) {
+    override fun actualizar(posicionX: Double, posicionY: Double) {
         // Actualizar la posición de los ejes y etiquetas según la posición actual. Hace que se pueda reiniciar
         if (!activo) return
         ejeX.startX = origenX
@@ -60,7 +60,7 @@ internal class VisualizadorEjes(contenedor: Pane) {
         etiquetaY.y = posicionY - MARGEN
     }
 
-    fun ocultar() {
+    override fun ocultar() {
         // Desactivar la visualización de los ejes y etiquetas
         activo = false
         ejeX.isVisible = false

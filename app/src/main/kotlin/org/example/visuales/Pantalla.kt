@@ -9,8 +9,10 @@ import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.stage.Stage
 import org.example.fisicas.CalculadoraTrayectoria
+import org.example.fisicas.ISimulacionTrayectoria
 import org.example.fisicas.Proyectil
 import org.example.fisicas.SimulacionTrayectoria
+import org.example.trackeo.ILectorTeclado
 import org.example.trackeo.KeyboardReader
 
 private const val PIXELES_POR_METRO = 100.0
@@ -31,21 +33,21 @@ class Pantalla : Application() {
             root.layout()
         }
 
-        val simulacion = SimulacionTrayectoria(
+        val simulacion: ISimulacionTrayectoria = SimulacionTrayectoria(
             // Configura la simulación de la trayectoria del proyectil con los parámetros iniciales
             calculadora = CalculadoraTrayectoria(),
             pixelesPorMetro = PIXELES_POR_METRO,
             gravedad = GRAVEDAD_METROS_POR_SEGUNDO_CUADRADO,
             proyectil = Proyectil(posicionX = 100.0, posicionY = 620.0)
         )
-        lateinit var controlador: ControladorTrayectoria
-        val vistaSimulacion = VistaSimulacion(simulacion) {
+        lateinit var controlador: IControladorTrayectoria
+        val vistaSimulacion: IVistaSimulacion = VistaSimulacion(simulacion) {
             // Configura la acción al hacer clic en el botón de volver, mostrando la vista de inicio y preparando la partida con la posición de disparo actual
             controlador.prepararPartida(posicionDisparoY)
             mostrarVista(rootInicio)
         }
         escena = Scene(vistaSimulacion.raiz, 1280.0, 720.0, Color.BLACK)
-        val teclado = KeyboardReader().apply { attachTo(escena) }
+        val teclado: ILectorTeclado = KeyboardReader().apply { attachTo(escena) }
         // Configura el controlador de la simulación, que maneja la lógica de la trayectoria del proyectil y la interacción con el teclado y la escena
         controlador = ControladorTrayectoria(simulacion, vistaSimulacion, teclado, escena)
 
@@ -62,12 +64,13 @@ class Pantalla : Application() {
         // Agrega un filtro de eventos para bloquear la activación de botones al presionar ESPACIO o ENTER mientras se está en la vista de simulación, evitando que se activen acciones no deseadas
         escena.addEventFilter(KeyEvent.KEY_RELEASED, bloquearActivacionBotones)
 
-        val pantallaCreditos = Creditos()
+        val pantallaCreditos: IVistaCreditos = Creditos()
         val rootCreditos = pantallaCreditos.crearVista {
             // Configura la acción al hacer clic en el botón de volver desde la vista de créditos, mostrando la vista de inicio
             mostrarVista(rootInicio)
         }
-        rootInicio = Inicio().crearVista(
+        val pantallaInicio: IVistaInicio = Inicio()
+        rootInicio = pantallaInicio.crearVista(
             // Configura las acciones al hacer clic en los botones de iniciar y créditos desde la vista de inicio, mostrando la vista de simulación o la vista de créditos según corresponda
             onIniciarClick = {
                 // Muestra la vista de simulación y prepara la partida con la posición de disparo inicial, calculada a partir de la vista de simulación

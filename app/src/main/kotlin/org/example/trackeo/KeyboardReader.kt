@@ -5,7 +5,7 @@ import javafx.scene.Scene
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 
-class KeyboardReader {
+class KeyboardReader : ILectorTeclado {
     // Variables para almacenar el estado de las teclas
     private val pressedKeys = mutableSetOf<KeyCode>()
     private val consumedPresses = mutableSetOf<KeyCode>()
@@ -20,7 +20,7 @@ class KeyboardReader {
         pressedKeys.remove(event.code)
     }
 
-    fun attachTo(scene: Scene) {
+    override fun attachTo(scene: Scene) {
         // Si ya está adjunto a otra escena, primero se desadjunta
         detach()
         attachedScene = scene
@@ -29,10 +29,10 @@ class KeyboardReader {
         scene.addEventFilter(KeyEvent.KEY_RELEASED, keyReleasedHandler)
     }
 
-    fun isKeyPressed(keyCode: KeyCode): Boolean = keyCode in pressedKeys
+    override fun isKeyPressed(keyCode: KeyCode): Boolean = keyCode in pressedKeys
     // Verifica si una tecla específica está actualmente presionada
 
-    fun wasJustPressed(keyCode: KeyCode): Boolean {
+    override fun wasJustPressed(keyCode: KeyCode): Boolean {
         // Verifica si una tecla específica fue presionada recientemente y no ha sido consumida
         if (!isKeyPressed(keyCode)) {
             // Si la tecla no está presionada, se elimina de las teclas consumidas
@@ -43,7 +43,7 @@ class KeyboardReader {
         return consumedPresses.add(keyCode)
     }
 
-    fun detach() {
+    override fun detach() {
         // Si hay una escena adjunta, se eliminan los manejadores de eventos y se limpia el estado
         attachedScene?.let { scene ->
             // Elimina los manejadores de eventos de la escena adjunta

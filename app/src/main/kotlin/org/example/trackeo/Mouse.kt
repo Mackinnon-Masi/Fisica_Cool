@@ -6,22 +6,27 @@ import javafx.scene.input.MouseEvent
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 
-class MouseTracker {
+class MouseTracker : IRastreadorMouse {
     // Variables para almacenar las coordenadas del mouse
-    var lastX: Double = 0.0
+    override var lastX: Double = 0.0
         private set
-    var lastY: Double = 0.0
+    override var lastY: Double = 0.0
         private set
 
-    //Actualiza las coordenadas del mouse y opcionalmente muestra un label
-    fun attachTo(pane: Pane, showLabel: Boolean = true): Label? {
-        // Crea un label para mostrar las coordenadas del mouse si showLabel es true
-        val label = if (showLabel) crearEtiqueta(pane) else null
-        val mover = EventHandler<MouseEvent> { evento -> actualizarPosicion(evento, pane, label) }
+    private var etiqueta: Label? = null
+
+    //Actualiza las coordenadas del mouse y muestra un label
+    override fun attachTo(pane: Pane) {
+        // Crea un label para mostrar las coordenadas del mouse
+        etiqueta = crearEtiqueta(pane)
+        val mover = EventHandler<MouseEvent> { evento -> actualizarPosicion(evento, pane) }
         // Agrega los manejadores de eventos para mover y arrastrar el mouse
         pane.addEventFilter(MouseEvent.MOUSE_MOVED, mover)
         pane.addEventFilter(MouseEvent.MOUSE_DRAGGED, mover)
-        return label
+    }
+
+    override fun mostrarEtiqueta(visible: Boolean) {
+        etiqueta?.isVisible = visible
     }
 
     private fun crearEtiqueta(pane: Pane): Label = Label("x: 50.0  y: 50.0").apply {
@@ -37,11 +42,11 @@ class MouseTracker {
         toFront()
     }
 
-    private fun actualizarPosicion(evento: MouseEvent, pane: Pane, label: Label?) {
+    private fun actualizarPosicion(evento: MouseEvent, pane: Pane) {
         // Actualiza las coordenadas del mouse y la posición del label si existe
         lastX = evento.sceneX
         lastY = evento.sceneY
-        label?.let {
+        etiqueta?.let {
             // Actualiza el texto y la posición del label según las coordenadas del mouse
             it.text = "x: ${"%.1f".format(lastX)}  y: ${"%.1f".format(lastY)}"
             it.autosize()

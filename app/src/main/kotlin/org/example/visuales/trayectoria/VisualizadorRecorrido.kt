@@ -6,7 +6,7 @@ import javafx.scene.shape.Circle
 import javafx.scene.shape.Polyline
 import kotlin.math.floor
 
-internal class VisualizadorRecorrido(contenedor: Pane) {
+internal class VisualizadorRecorrido(contenedor: Pane) : IVisualizadorRecorrido {
     // Trayectoria y punto final
     private val recorrido = Polyline()
     private val pendiente = Polyline()
@@ -41,7 +41,7 @@ internal class VisualizadorRecorrido(contenedor: Pane) {
         contenedor.children.addAll(pendiente, recorrido, puntoFinal) 
     }
 
-    fun mostrar(
+    override fun mostrar(
         // Calcular y mostrar la trayectoria completa y el punto final
         origenX: Double,
         origenY: Double,
@@ -68,7 +68,7 @@ internal class VisualizadorRecorrido(contenedor: Pane) {
         actualizar(0.0)
     }
 
-    fun actualizar(tiempo: Double) {
+    override fun actualizar(tiempo: Double) {
         // Actualizar la visualización de la trayectoria y la pendiente según el tiempo transcurrido
         if (puntos.size < 2 || tiempoTotal <= 0.0) return
 
@@ -90,7 +90,7 @@ internal class VisualizadorRecorrido(contenedor: Pane) {
         pendiente.isVisible = puntosPendientes.size > 1
     }
 
-    fun ocultar() {
+    override fun ocultar() {
         // Ocultar la visualización de la trayectoria y el punto final
         puntos = emptyList()
         recorrido.isVisible = false

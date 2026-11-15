@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 
-class Creditos {
+class Creditos : IVistaCreditos {
 
     init {
         // Carga de fuentes personalizadas para los créditos
@@ -19,7 +19,7 @@ class Creditos {
         if (montserratRegular != null) Font.loadFont(montserratRegular, 28.0)
     }
 
-    fun crearVista(onVolverClick: () -> Unit = {}): BorderPane {
+    override fun crearVista(onVolverClick: () -> Unit): BorderPane {
         //botón de volver a la pantalla principal
         val btnVolver = BotonVolver(onVolverClick)
 
