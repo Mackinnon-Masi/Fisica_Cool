@@ -2,17 +2,13 @@ package org.example.trackeo
 
 import javafx.scene.Scene
 import javafx.scene.input.KeyCode
-import javafx.scene.layout.Pane
 
-/** Contratos de los lectores de entrada (mouse y teclado). */
-
-interface IRastreadorMouse {
-    val lastX: Double
-    val lastY: Double
-    fun attachTo(pane: Pane)
-    fun mostrarEtiqueta(visible: Boolean)
-}
-
+/**
+ * Contrato de lectura de teclado.
+ *
+ * Permite al controlador consultar el estado de las teclas sin depender de
+ * JavaFX y facilita sustituirlo por una implementacion de prueba.
+ */
 interface ILectorTeclado {
     fun attachTo(scene: Scene)
     fun isKeyPressed(keyCode: KeyCode): Boolean
